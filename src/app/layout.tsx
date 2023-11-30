@@ -1,8 +1,9 @@
+import CategoryNav from '@/components/CategoryNav'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import './globals.css'
-import Link from 'next/link'
 import Image from 'next/image'
+import Link from 'next/link'
+import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -31,7 +32,7 @@ export default function RootLayout({
           rel="stylesheet"
           href={`${process.env.MAGENTO_STYLESHEETS_BASE_URL}/styles-l.css`}
         />
-        <div className="md:w-full md:max-w-[1280px] mx-auto px-[15px] md:px-[20px]">
+        <div>
           <div className="h-40 md:w-full md:max-w-[1280px] mx-auto px-[15px] md:px-[20px] flex items-center justify-between">
             <Link href="/">
               <Image
@@ -44,7 +45,10 @@ export default function RootLayout({
               />
             </Link>
           </div>
-          {children}
+          <CategoryNav />
+          <div className="md:w-full md:max-w-[1280px] mx-auto px-[15px] md:px-[20px]">
+            {children}
+          </div>
         </div>
       </body>
     </html>

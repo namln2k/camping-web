@@ -1,9 +1,9 @@
 'use client'
 
-import useHome from '@/hooks/home/useHome'
+import { useHomePage } from '@/hooks/home'
 
 export default function Home() {
-  const [homePageBlock]: string[] = useHome()
+  const [homePageBlock]: string[] = useHomePage()
 
   return (
     <>

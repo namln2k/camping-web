@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
+html .widget.block {
   @apply text-[10px];
+}
+
+html .block {
+  @apply mb-0;
+}
+
+html ul {
+  @apply mb-0;
+}
+
+html ul li {
+  @apply mb-0;
+}
+
+html a {
+  @apply inline-block text-left justify-normal;
+}
+
+html a:visited {
+  @apply text-inherit;
 }
