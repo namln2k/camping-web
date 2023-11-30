@@ -1,7 +1,15 @@
+'use client'
+
+import useHome from '@/hooks/home/useHome'
+
 export default function Home() {
+  const [homePageBlock]: string[] = useHome()
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>Home</h1>
-    </main>
+    <>
+      <main>
+        <div dangerouslySetInnerHTML={{ __html: homePageBlock }}></div>
+      </main>
+    </>
   )
 }
