@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  @apply text-gray-900;
+}
+
 html .widget.block {
   @apply text-[10px];
 }
@@ -24,4 +28,8 @@ html a {
 
 html a:visited {
   @apply text-inherit;
+}
+
+.product-card .description > p:first-child {
+  @apply indent-6;
 }

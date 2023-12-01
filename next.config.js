@@ -8,6 +8,9 @@ const nextConfig = {
     MAGENTO_STYLESHEETS_BASE_URL: process.env.MAGENTO_STYLESHEETS_BASE_URL,
     BASE_URL: process.env.BASE_URL,
   },
+  images: {
+    domains: ['magento246p3.local'],
+  },
 }
 
 module.exports = nextConfig
