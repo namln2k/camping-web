@@ -4,9 +4,10 @@ import { useCategoryNav } from '@/hooks/home'
 import Link from 'next/link'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
 import LoadingFallback from './LoadingFallback'
+import ErrorFallback from './ErrorFallbak'
 
 export default function CategoryNav() {
-  const [categories, loading] = useCategoryNav()
+  const [categories, loading, errors] = useCategoryNav()
 
   if (loading) {
     return (
@@ -17,6 +18,10 @@ export default function CategoryNav() {
         className="mx-auto px-12"
       />
     )
+  }
+
+  if (errors.length) {
+    return <ErrorFallback />
   }
 
   return (

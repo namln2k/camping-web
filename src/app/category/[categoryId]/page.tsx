@@ -1,10 +1,10 @@
 'use client'
 
 import { useCategoryPage } from '@/hooks/catalog'
-import Image from 'next/image'
 import Link from 'next/link'
 import Loading from './loading'
 import ProductCard from '@/components/ProductCard'
+import ErrorFallback from '@/components/ErrorFallbak'
 
 export default function CategoryPage({
   params,
@@ -12,10 +12,14 @@ export default function CategoryPage({
   params: { categoryId: string }
 }) {
   const { categoryId } = params
-  const [products, category, loading] = useCategoryPage(categoryId)
+  const [products, category, loading, errors] = useCategoryPage(categoryId)
 
   if (loading) {
     return <Loading />
+  }
+
+  if (errors.length) {
+    return <ErrorFallback />
   }
 
   return (
@@ -39,10 +43,10 @@ export default function CategoryPage({
             </ul>
           </div>
         </div>
-        <ul className="w-[calc(100%_-_240px)] pl-16">
+        <ul className="w-[calc(100%_-_240px)] pl-16 pb-16">
           <h2 className="sr-only">Products</h2>
           <div className="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-16 lg:grid-cols-3 lg:gap-x-8">
-            {products.map((product) => (
+            {products?.map((product) => (
               <div key={product.sku}>
                 <ProductCard sku={product.sku} />
               </div>

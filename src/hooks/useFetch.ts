@@ -1,9 +1,18 @@
 import { useEffect, useState } from 'react'
 
-const useFetch = (method: string, endpoint: string, body: any = null) => {
-  const [data, setData] = useState<any>(null)
+interface Error {
+  message: string
+  parameters: string[] | []
+}
+
+const useFetch = (
+  method: string,
+  endpoint: string,
+  body: any = null
+): [any, boolean, Error[] | []] => {
+  const [data, setData] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [errors, setErrors] = useState([])
+  const [errors, setErrors] = useState<Error[] | []>([])
 
   useEffect(() => {
     async function fetchData() {
@@ -86,7 +95,7 @@ const useFetch = (method: string, endpoint: string, body: any = null) => {
     fetchData()
   }, [method, endpoint, body])
 
-  return { data, loading, errors }
+  return [data, loading, errors]
 }
 
 export default useFetch

@@ -1,10 +1,10 @@
-import { Category } from '@/constants/types'
+import { Category, Error } from '@/constants/types'
 import { useCategories } from '@/hooks/catalog'
 
 const FIRST_CATEGORY_LEVEL = 2
 
-export default function useCategoryNav(): [Category[], boolean] {
-  const [categories, loading] = useCategories()
+export default function useCategoryNav(): [Category[], boolean, [] | Error[]] {
+  const [categories, loading, errors] = useCategories()
 
   const result = categories.filter((category) => {
     if (category.level === FIRST_CATEGORY_LEVEL) {
@@ -21,5 +21,5 @@ export default function useCategoryNav(): [Category[], boolean] {
     return false
   })
 
-  return [result, loading]
+  return [result, loading, errors]
 }

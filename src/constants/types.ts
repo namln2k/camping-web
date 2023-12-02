@@ -65,3 +65,8 @@ export interface Product {
   media_gallery_entries: any[]
   tier_prices: any[]
 }
+
+export interface Error {
+  message: string
+  parameters: string[] | []
+}

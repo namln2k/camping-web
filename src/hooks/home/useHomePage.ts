@@ -1,3 +1,4 @@
+import { Error } from '@/constants/types'
 import { useFetch } from '@/hooks'
 import { sanitizeBlockContent } from '@/util'
 
@@ -35,13 +36,14 @@ const queryBlockByIdentifier = (identifier: string) => {
   return `cmsBlock/search?searchCriteria[sortOrders][0][direction]=ASC&searchCriteria[filterGroups][0][filters][0][field]=identifier&searchCriteria[filterGroups][0][filters][0][value]=${identifier}&searchCriteria[filterGroups][0][filters][0][conditionType]=eq`
 }
 
-export default function useHome(): string[] {
+export default function useHome(): [string[], boolean, [] | Error[]] {
   const cmsBlocks: string[] = []
 
-  const { data: homePageBlocks }: { data: CmsBlockSearchResult } = useFetch(
-    'GET',
-    queryBlockByIdentifier('home-page-block')
-  )
+  const [homePageBlocks, loading, errors]: [
+    CmsBlockSearchResult,
+    boolean,
+    Error[] | []
+  ] = useFetch('GET', queryBlockByIdentifier('home-page-block'))
 
   // Return block content only if there is exactly one block found with given identifier
   if (
@@ -52,5 +54,5 @@ export default function useHome(): string[] {
     cmsBlocks.push(sanitizeBlockContent(blockContent))
   }
 
-  return cmsBlocks
+  return [cmsBlocks, loading, errors]
 }

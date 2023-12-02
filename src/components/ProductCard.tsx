@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function ProductCard({ sku, className }: Props) {
-  const [product, loading] = useProduct(sku)
+  const [product, loading, errors] = useProduct(sku)
 
   if (!product || loading) {
     return <div></div>
