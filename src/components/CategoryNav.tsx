@@ -15,7 +15,7 @@ export default function CategoryNav() {
         show={loading}
         height={80}
         width={1280}
-        className="mx-auto px-12"
+        className="mx-auto px-8"
       />
     )
   }

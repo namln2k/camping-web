@@ -7,7 +7,7 @@ interface Props {
   className?: string
 }
 
-export default function ProductCard({ sku, className }: Props) {
+export default function ProductCard({ sku, className = '' }: Props) {
   const [product, loading, errors] = useProduct(sku)
 
   if (!product || loading) {
@@ -17,7 +17,7 @@ export default function ProductCard({ sku, className }: Props) {
   return (
     <>
       <div
-        className={`product-card group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-xl hover:scale-110 transition h-full pb-12 ${className}`}
+        className={`product-card group relative flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xl hover:scale-110 transition h-full pb-12 ${className}`}
       >
         <div className="bg-gray-200 sm:aspect-none group-hover:opacity-75 cursor-pointer">
           <Image
