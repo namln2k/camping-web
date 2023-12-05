@@ -10,14 +10,7 @@ export default function CategoryNav() {
   const [categories, loading, errors] = useCategoryNav()
 
   if (loading) {
-    return (
-      <LoadingFallback
-        show={loading}
-        height={80}
-        width={1280}
-        className="mx-auto px-8"
-      />
-    )
+    return <div className="category-nav w-full h-28 bg-gradient-to-b from-gray-200 to-gray-300 my-4" />
   }
 
   if (errors.length) {

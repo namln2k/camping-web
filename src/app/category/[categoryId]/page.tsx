@@ -45,7 +45,7 @@ export default function CategoryPage({
       <h1>{category?.name}</h1>
       <div className="flex">
         <FilterSection />
-        <div className="w-[calc(100%_-_240px)] h-screen pl-16 pb-16">
+        <div className="w-[calc(100%_-_240px)] h-screen pl-16">
           {loading ? (
             <div className="w-full h-full">
               <LoadingFallback className="rounded-xl" />
