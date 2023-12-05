@@ -1,3 +1,5 @@
+import DOMPurify from 'isomorphic-dompurify';
+
 export default function sanitizeBlockContent(blockContent: string) {
   let result = blockContent
 
@@ -33,5 +35,5 @@ export default function sanitizeBlockContent(blockContent: string) {
     )
     .replace(/\.html"/g, '"')
 
-  return result
+  return DOMPurify.sanitize(result)
 }

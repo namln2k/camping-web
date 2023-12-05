@@ -1,0 +1,8 @@
+html {
+  a:visited {
+    @apply text-[initial];
+  }
+  ul > li {
+    @apply mb-0;
+  }
+}

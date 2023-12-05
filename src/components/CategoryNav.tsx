@@ -1,38 +1,34 @@
-'use client'
-
-import { useCategoryNav } from '@/hooks/home'
-import Link from 'next/link'
+import ErrorFallback from '@/components/ErrorFallback'
+import useCategoryNav from '@/hooks/home/useCategoryNav'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
-import LoadingFallback from './LoadingFallback'
-import ErrorFallback from './ErrorFallbak'
+import Link from 'next/link'
 
-export default function CategoryNav() {
-  const [categories, loading, errors] = useCategoryNav()
+interface Props {
+  className?: string
+}
 
-  if (loading) {
+export default async function CategoryNav({ className = '' }: Props) {
+  const [categories, errors] = await useCategoryNav()
+
+  if (errors.length) {
     return (
-      <LoadingFallback
-        show={loading}
-        height={80}
-        width={1280}
-        className="mx-auto px-8"
+      <ErrorFallback
+        className={className}
+        errors={errors}
+        sectionName="CategoryNav"
       />
     )
   }
 
-  if (errors.length) {
-    return <ErrorFallback />
-  }
-
   return (
-    <div className="category-nav w-full bg-gray-100">
-      <ul className="flex flex-col md:flex-row font-semibold text-2xl px-0 md:px-8 mb-0 md:mb-4 md:w-full md:max-w-[1280px] mx-auto">
+    <div className={`category-nav w-full bg-gray-100 ${className}`}>
+      <ul className="flex flex-col md:flex-row font-semibold text-2xl px-0 md:px-8 mb-0 md:w-full md:max-w-[1280px] mx-auto">
         {categories.map((category) => (
           <li
             key={category.id}
             className="group relative md:h-28 hover:bg-gray-300 cursor-pointer"
           >
-            {category.children_list?.length > 0 ? (
+            {category?.children?.length && category?.children?.length > 0 ? (
               <div className="flex items-center h-full py-8 md:py-0 px-12 md:px-12 text-gray-900 hover:text-gray-900 hover:no-underline">
                 {category.name}
                 <span className="ml-4 w-8 h-8 group-hover:rotate-180 transition-all">
@@ -48,10 +44,10 @@ export default function CategoryNav() {
               </Link>
             )}
 
-            {category.children_list?.length > 0 && (
+            {category?.children && category?.children?.length > 0 && (
               <div className="z-10 hidden group-hover:block static md:absolute min-w-[200px] md:top-28 md:left-0 bg-gray-100 border shadow">
                 <ul>
-                  {category.children_list.map((child) => (
+                  {category.children.map((child) => (
                     <li
                       key={child.id}
                       className="py-8 pl-16 md:pl-8 hover:bg-gray-300"

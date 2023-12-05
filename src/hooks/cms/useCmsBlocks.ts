@@ -7,16 +7,16 @@ export default async function useCmsBlocks(
 ): Promise<[CmsBlock[], Error[]]> {
   const [cmsBlocksData, errors] = await useQuery(
     gql`
-          query {
-            cmsBlocks(identifiers: ${JSON.stringify(identifiers)}) {
-              items {
-                identifier
-                title
-                content
-              }
-            }
+      query {
+        cmsBlocks(identifiers: ${JSON.stringify(identifiers)}) {
+          items {
+            identifier
+            title
+            content
           }
-        `
+        }
+      }
+    `
   )
 
   if (cmsBlocksData.cmsBlocks) {

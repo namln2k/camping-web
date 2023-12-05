@@ -1,4 +1,4 @@
-export default interface CmsBlock {
+export interface CmsBlock {
   identifier: string
   title: string
   content: string

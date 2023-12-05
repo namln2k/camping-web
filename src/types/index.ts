@@ -1,2 +1,3 @@
-export { type default as Error } from './error'
-export { type default as CmsBlock } from './cms/cmsBlock'
+export * from './catalog'
+export * from './cms'
+export * from './error'
