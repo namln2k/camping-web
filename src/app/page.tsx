@@ -1,7 +1,23 @@
-export default function Home() {
+import { useHome } from '@/hooks'
+
+export default async function Home() {
+  const [homePage, errors] = await useHome()
+
+  if (errors.length) {
+    // Handle display of errors
+  }
+
+  if (!homePage) {
+    // Handle loading state
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>Home</h1>
-    </main>
+    <>
+      <main>
+        <div
+          dangerouslySetInnerHTML={{ __html: homePage.homePageBlock || '' }}
+        ></div>
+      </main>
+    </>
   )
 }
