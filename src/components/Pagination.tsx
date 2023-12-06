@@ -1,3 +1,5 @@
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
+
 interface Props {
   currentPage: number
   pageSize: number
@@ -20,22 +22,30 @@ export default function Pagination({
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
       >
-        Previous
+        <span className="w-6 h-6">
+          <ChevronLeftIcon className="w-6 h-6" />
+        </span>
       </button>
       {pages.map((page) => (
-        <button
+        <span
           key={page}
-          disabled={page === currentPage}
+          className={`inline-flex items-center px-5 py-2 ring-1 ring-inset ring-gray-600 border-collapse ml-[-1px] mr-[-1px] cursor-pointer ${
+            page === currentPage
+              ? 'bg-indigo-500 text-white hover:bg-indigo-600'
+              : 'hover:bg-gray-100 '
+          }`}
           onClick={() => onPageChange(page)}
         >
           {page}
-        </button>
+        </span>
       ))}
       <button
         disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
       >
-        Next
+        <span className="w-6 h-6">
+          <ChevronRightIcon className="w-6 h-6" />
+        </span>
       </button>
     </div>
   )
