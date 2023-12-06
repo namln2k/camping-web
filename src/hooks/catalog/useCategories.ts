@@ -3,7 +3,7 @@ import { CategoryNode, Error } from '@/types'
 import { gql } from '@apollo/client'
 
 export default async function useCategories(
-  categoryIds: string | string[]
+  categoryIds: string | number | (string | number)[]
 ): Promise<[CategoryNode[], Error[]]> {
   const [categoriesData, errors] = await useQuery(
     gql`
@@ -17,6 +17,7 @@ export default async function useCategories(
           url_path
           url_key
           breadcrumbs {
+            category_id
             category_uid
             category_name
             category_level
@@ -39,6 +40,25 @@ export default async function useCategories(
               path
               url_path
               url_key
+              children_count
+              children {
+                id
+                uid
+                level
+                name
+                path
+                url_path
+                url_key
+                children {
+                  id
+                  uid
+                  level
+                  name
+                  path
+                  url_path
+                  url_key
+                }
+              }
             }
           }
         }
