@@ -1,6 +1,6 @@
 import BreadCrumb from '@/components/Breadcrumb'
 import ErrorFallback from '@/components/ErrorFallback'
-import ProductList from '@/components/catalog/CategoryProductList'
+import CategoryProductList from '@/components/catalog/CategoryProductList'
 import useCategoryDetail from '@/hooks/catalog/useCategoryDetail'
 
 interface Props {
@@ -25,7 +25,7 @@ export default async function CategoryDetail({ params: { id } }: Props) {
       <div>
         <BreadCrumb breadcrumb={category?.breadcrumbs} currentNode={category} />
         <h1 className="mt-6">{category?.name}</h1>
-        <ProductList categoryId={id} />
+        <CategoryProductList categoryId={id} />
       </div>
     </>
   )

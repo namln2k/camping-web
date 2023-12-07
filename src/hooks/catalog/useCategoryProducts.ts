@@ -7,11 +7,13 @@ import { RefetchFunction } from '@apollo/client/react/hooks/useSuspenseQuery'
 interface Props {
   categoryId: number | string
   currentPage?: number
+  filter?: string
 }
 
 export default function useCategoryProducts(
   categoryId: number | string,
-  currentPage: number = 1
+  currentPage: number = 1,
+  filter = ''
 ): [SearchResult<Product>, Error[], RefetchFunction<any, any>] {
   const {
     data: { products: productsData },
@@ -27,32 +29,30 @@ export default function useCategoryProducts(
         ) {
           total_count
           items {
-            id
             sku
+            uid
             name
-            url_key
-            stock_status
-            new
             image {
               url
               label
-              position
             }
-            small_image {
-              url
-              label
-              position
+            small_image{
+                url
+                label
             }
-            thumbnail {
-              url
-              label
-              position
-            }
-            short_description {
-              html
-            }
-            description {
-              html
+            media_gallery {
+                url
+                label
+                ... on ProductVideo {
+                    video_content {
+                        media_type
+                        video_provider
+                        video_url
+                        video_title
+                        video_description
+                        video_metadata
+                    }
+                }
             }
             price_range {
               minimum_price {
@@ -64,6 +64,10 @@ export default function useCategoryProducts(
                   value
                   currency
                 }
+                discount {
+                  amount_off
+                  percent_off
+                }
               }
               maximum_price {
                 regular_price {
@@ -74,17 +78,10 @@ export default function useCategoryProducts(
                   value
                   currency
                 }
-              }
-            }
-            price_tiers {
-              quantity
-              final_price {
-                value
-                currency
-              }
-              discount {
-                amount_off
-                percent_off
+                discount {
+                  amount_off
+                  percent_off
+                }
               }
             }
           }

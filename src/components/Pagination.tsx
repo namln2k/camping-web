@@ -18,7 +18,7 @@ export default function Pagination({
 
   return (
     <>
-      <div className="mt-12 flex items-center justify-between px-0 md:pl-16 md:pr-24">
+      <div className="flex items-center justify-between">
         <p className="hidden md:block text-center">
           Showing{' '}
           <span className="font-medium">

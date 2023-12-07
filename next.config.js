@@ -7,6 +7,18 @@ const nextConfig = {
     BASE_URL: process.env.BASE_URL,
   },
   reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: new URL(process.env.MAGENTO_BASE_URL).hostname,
+      },
+      {
+        protocol: 'https',
+        hostname: new URL(process.env.MAGENTO_BASE_URL).hostname,
+      },
+    ],
+  },
 }
 
 module.exports = nextConfig
