@@ -43,11 +43,13 @@ export default function CategoryProductList({ categoryId }: Props) {
 
   const handleFilterChange = useCallback(
     (filter: Record<string, string>) => {
-      for (const key in filter) {
-        filter[key] = filter[key].slice(1, -1)
+      const cloneFilter = { ...filter }
+
+      for (const key in cloneFilter) {
+        cloneFilter[key] = cloneFilter[key].slice(1, -1).replace(/"/g, '')
       }
 
-      router.push(pathname + '?' + upsertQueryParams(searchParams, filter))
+      router.push(pathname + '?' + upsertQueryParams(searchParams, cloneFilter))
     },
     [pathname, router, searchParams]
   )

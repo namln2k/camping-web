@@ -25,6 +25,11 @@ export function upsertQueryParams(
   const result = new URLSearchParams(searchParams)
 
   for (const key in params) {
+    if (!params[key] || params[key] === '') {
+      result.delete(key)
+      continue
+    }
+
     result.set(key, params[key])
   }
 

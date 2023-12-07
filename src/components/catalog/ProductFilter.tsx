@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const filters = [
   {
@@ -83,8 +83,12 @@ export default function ProductFilter({
   const [filterValues, setFilterValues] =
     useState<Record<string, string>>(initialFilterValues)
 
+  useEffect(() => {
+    onFilterChange(filterValues)
+  }, [filterValues])
+
   const handleInputChange = (attribute: string, value: string) => {
-    let finalFilterValues = {}
+    let finalFilterValues
 
     if (filterValues[attribute]) {
       const prevAttribute = JSON.parse(filterValues[attribute])
@@ -94,22 +98,22 @@ export default function ProductFilter({
           ...filterValues,
           [attribute]: JSON.stringify(
             prevAttribute.filter((v: string) => v !== value)
-          ).slice(1, -1),
+          ),
         }
       } else {
         finalFilterValues = {
           ...filterValues,
-          [attribute]: JSON.stringify([...prevAttribute, value]).slice(1, -1),
+          [attribute]: JSON.stringify([...prevAttribute, value]),
         }
       }
     } else {
       finalFilterValues = {
         ...filterValues,
-        [attribute]: JSON.stringify([value]).slice(1, -1),
+        [attribute]: JSON.stringify([value]),
       }
     }
 
-    onFilterChange(finalFilterValues)
+    setFilterValues(finalFilterValues)
   }
 
   return (
