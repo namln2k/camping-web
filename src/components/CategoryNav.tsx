@@ -53,12 +53,12 @@ export default async function CategoryNav({ className = '' }: Props) {
                     >
                       <Link
                         href={`/category/${subCate.id}`}
-                        className="flex items-start h-full py-8 md:px-8 mb-0 px-12 hover:no-underline"
+                        className="flex items-start h-full py-8 md:px-8 mb-0 pr-4 pl-28 md:pl-12 hover:no-underline"
                       >
                         {subCate.name}
 
                         {subCate?.children && subCate.children.length > 0 && (
-                          <span className="ml-4 w-6 h-6 mt-1">
+                          <span className="ml-4 w-6 h-6 mt-1 rotate-90 group-hover/subCate:-rotate-90 transition-all">
                             <ChevronRightIcon />
                           </span>
                         )}
@@ -73,7 +73,7 @@ export default async function CategoryNav({ className = '' }: Props) {
                               >
                                 <Link
                                   href={`/category/${subSubCate.id}`}
-                                  className="flex items-start h-full py-8 md:px-8 mb-0 px-12 hover:no-underline max-w-[120%]"
+                                  className="flex items-start h-full py-8 md:px-8 mb-0 pr-4 pl-40 md:pl-12 hover:no-underline max-w-[120%]"
                                 >
                                   {subSubCate.name}
                                 </Link>

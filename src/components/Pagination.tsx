@@ -17,36 +17,56 @@ export default function Pagination({
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1)
 
   return (
-    <div>
-      <button
-        disabled={currentPage === 1}
-        onClick={() => onPageChange(currentPage - 1)}
-      >
-        <span className="w-6 h-6">
-          <ChevronLeftIcon className="w-6 h-6" />
-        </span>
-      </button>
-      {pages.map((page) => (
-        <span
-          key={page}
-          className={`inline-flex items-center px-5 py-2 ring-1 ring-inset ring-gray-600 border-collapse ml-[-1px] mr-[-1px] cursor-pointer ${
-            page === currentPage
-              ? 'bg-indigo-500 text-white hover:bg-indigo-600'
-              : 'hover:bg-gray-100 '
-          }`}
-          onClick={() => onPageChange(page)}
-        >
-          {page}
-        </span>
-      ))}
-      <button
-        disabled={currentPage === totalPages}
-        onClick={() => onPageChange(currentPage + 1)}
-      >
-        <span className="w-6 h-6">
-          <ChevronRightIcon className="w-6 h-6" />
-        </span>
-      </button>
-    </div>
+    <>
+      <div className="mt-12 flex items-center justify-between px-0 md:pl-16 md:pr-24">
+        <p className="hidden md:block text-center">
+          Showing{' '}
+          <span className="font-medium">
+            {(currentPage - 1) * pageSize + 1}
+          </span>{' '}
+          to&nbsp;
+          <span className="font-medium">
+            {Math.min(currentPage * pageSize, totalCount)}
+          </span>{' '}
+          of <span className="font-medium">{totalCount}</span> results
+        </p>
+        <div className="flex items-center justify-center">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => onPageChange(currentPage - 1)}
+            className="!rounded-r-none border-gray-300 w-20 h-16 rounded-l-lg disabled:!opacity-30"
+          >
+            <span className="w-8 h-8 inline-block mt-1">
+              <ChevronLeftIcon className="w-8 h-8" />
+            </span>
+          </button>
+          <ul className="inline-flex">
+            {pages.map((page, index) => (
+              <button
+                key={index}
+                disabled={page === currentPage}
+                onClick={() => onPageChange(page)}
+                className={`${
+                  page === currentPage
+                    ? 'bg-blue-600 text-white !opacity-100 border-blue-600'
+                    : 'border-gray-300'
+                } border !rounded-none w-16 h-16 border-collapse`}
+              >
+                {page}
+              </button>
+            ))}
+          </ul>
+          <button
+            disabled={currentPage === totalPages}
+            onClick={() => onPageChange(currentPage + 1)}
+            className="!rounded-l-none border-gray-300 w-20 h-16 rounded-r-lg disabled:!opacity-30"
+          >
+            <span className="w-8 h-8 inline-block mt-1">
+              <ChevronRightIcon className="w-8 h-8" />
+            </span>
+          </button>
+        </div>
+      </div>
+    </>
   )
 }
