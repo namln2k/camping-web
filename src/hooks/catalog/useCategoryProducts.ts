@@ -4,16 +4,9 @@ import { SearchResult } from '@/types/query'
 import { OperationVariables, gql, useSuspenseQuery } from '@apollo/client'
 import { RefetchFunction } from '@apollo/client/react/hooks/useSuspenseQuery'
 
-interface Props {
-  categoryId: number | string
-  currentPage?: number
-  filter?: string
-}
-
 export default function useCategoryProducts(
-  categoryId: number | string,
-  currentPage: number = 1,
-  filter = ''
+  categoryUid: string,
+  currentPage: number = 1
 ): [SearchResult<Product>, Error[], RefetchFunction<any, any>] {
   const {
     data: { products: productsData },
@@ -23,7 +16,7 @@ export default function useCategoryProducts(
     gql`
       query {
         products(
-          filter: { category_id: { eq: ${categoryId} } }
+          filter: { category_uid: { eq: "${categoryUid}" } }
           pageSize: ${PRODUCT_LISTING_PAGE_SIZE}
           currentPage: ${currentPage ?? 1}
         ) {
@@ -94,5 +87,5 @@ export default function useCategoryProducts(
     `
   )
 
-  return [productsData, [error as Error], refetch]
+  return [productsData, error ? [error as Error] : [], refetch]
 }

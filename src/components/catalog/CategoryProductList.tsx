@@ -1,6 +1,7 @@
 'use client'
 
 import { PRODUCT_LISTING_PAGE_SIZE } from '@/constants'
+import useCategoryAttributes from '@/hooks/catalog/useCategoryAttributes'
 import useCategoryProducts from '@/hooks/catalog/useCategoryProducts'
 import { upsertQueryParam, upsertQueryParams } from '@/util'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
@@ -10,20 +11,21 @@ import ProductCard from './ProductCard'
 import ProductFilter from './ProductFilter'
 
 interface Props {
-  categoryId: string | number
+  categoryUid: string
 }
 
-export default function CategoryProductList({ categoryId }: Props) {
+export default function CategoryProductList({ categoryUid }: Props) {
   const [currentPage, setCurrentPage] = useState<number | undefined>()
-  const [filter, setFilter] = useState<string | undefined>()
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-
-  const [productsData, error, refetch] = useCategoryProducts(
-    categoryId,
-    currentPage || 1,
-    filter
+  const [attributeFilters, errors] = useCategoryAttributes(categoryUid)
+  const applicableFilters = attributeFilters.filter((attributeFilter) => {
+    return attributeFilter.attribute_code !== 'category_uid'
+  })
+  const [productsData, error, refetchProducts] = useCategoryProducts(
+    categoryUid,
+    currentPage || 1
   )
 
   useEffect(() => {
@@ -33,13 +35,15 @@ export default function CategoryProductList({ categoryId }: Props) {
       setCurrentPage(Number(pageNumber))
     }
 
-    const filterParam = searchParams.get('filter')
-  }, [searchParams])
+    let filterQuery = ''
+    applicableFilters.forEach((attributeFilter) => {
+      const attributeValue = searchParams.get(attributeFilter.attribute_code)
 
-  useEffect(() => {
-    if (currentPage) {
-    }
-  }, [currentPage, refetch])
+      if (attributeValue) {
+        filterQuery += `&${attributeFilter.attribute_code}=${attributeValue}`
+      }
+    })
+  }, [searchParams, applicableFilters])
 
   const handleFilterChange = useCallback(
     (filter: Record<string, string>) => {
@@ -60,7 +64,10 @@ export default function CategoryProductList({ categoryId }: Props) {
         <div className="w-full md:w-[20%]">
           <h3 className="my-4">Shopping options</h3>
           <div className="mt-8">
-            <ProductFilter onFilterChange={handleFilterChange} />
+            <ProductFilter
+              onFilterChange={handleFilterChange}
+              attributeFilters={applicableFilters}
+            />
           </div>
         </div>
         <div className="w-full md:w-[80%] pl-0 md:pl-12 ">

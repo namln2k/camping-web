@@ -1,5 +1,6 @@
 'use client'
 
+import { ProductAggregation } from '@/types'
 import { useEffect, useState } from 'react'
 
 const filters = [
@@ -72,20 +73,22 @@ const filters = [
 ]
 
 interface Props {
-  initialFilter?: Record<string, any>
+  attributeFilters: ProductAggregation[]
   onFilterChange: (filterValues: Record<string, string>) => void
+  initialFilter?: Record<string, any>
 }
 
 export default function ProductFilter({
-  initialFilter: initialFilterValues = {},
+  attributeFilters,
   onFilterChange,
+  initialFilter: initialFilterValues = {},
 }: Props) {
   const [filterValues, setFilterValues] =
     useState<Record<string, string>>(initialFilterValues)
 
   useEffect(() => {
     onFilterChange(filterValues)
-  }, [filterValues])
+  }, [filterValues, onFilterChange])
 
   const handleInputChange = (attribute: string, value: string) => {
     let finalFilterValues
@@ -118,8 +121,8 @@ export default function ProductFilter({
 
   return (
     <>
-      {filters.map((filter) => (
-        <div key={filter.name} className="border-t py-8">
+      {attributeFilters.map((filter) => (
+        <div key={filter.attribute_code} className="border-t py-8">
           <h4>{filter.label}</h4>
           <ul className="mt-2">
             {filter.options.map((option) => (
@@ -130,7 +133,7 @@ export default function ProductFilter({
                     name={option.value}
                     value={option.value}
                     onChange={() => {
-                      handleInputChange(filter.name, option.value)
+                      handleInputChange(filter.attribute_code, option.value)
                     }}
                   />
                   {option.label}

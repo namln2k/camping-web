@@ -20,11 +20,11 @@ export default function ErrorFallback({
   return (
     <>
       <div
-        className={`relative z-[1000] bg-white w-full max-w-[1366px] mx-auto py-4 px-48 ${className} ${
+        className={`relative z-[1000] bg-white w-full max-w-[1366px] mx-auto py-4 px-[10%] ${className} ${
           show ? 'block' : 'hidden'
         }`}
       >
-        <span className="absolute top-0 right-48 w-16 h-16 flex items-end justify-end">
+        <span className="absolute top-0 right-[5%] w-16 h-16 flex items-end justify-end">
           <XMarkIcon
             className="cursor-pointer hover:font-bold"
             width={24}

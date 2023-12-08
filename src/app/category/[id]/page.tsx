@@ -12,7 +12,7 @@ interface Props {
 export default async function CategoryDetail({ params: { id } }: Props) {
   const [category, errors] = await useCategoryDetail(id)
 
-  if (errors.length) {
+  if (errors.length || !category) {
     return (
       <>
         <ErrorFallback errors={errors} sectionName="CategoryPage" />
@@ -25,7 +25,7 @@ export default async function CategoryDetail({ params: { id } }: Props) {
       <div>
         <BreadCrumb breadcrumb={category?.breadcrumbs} currentNode={category} />
         <h1 className="mt-6">{category?.name}</h1>
-        <CategoryProductList categoryId={id} />
+        <CategoryProductList categoryUid={category?.uid} />
       </div>
     </>
   )

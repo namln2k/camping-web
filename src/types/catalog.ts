@@ -86,3 +86,15 @@ export interface Product {
 export interface CategoryProducts {
   products: SearchResult<Product>
 }
+
+export interface ProductAggregationOption {
+  label: string
+  value: string
+}
+
+export interface ProductAggregation {
+  attribute_code: string
+  count: number
+  label: string
+  options: ProductAggregationOption[]
+}
