@@ -6,7 +6,7 @@ interface Props {
   className?: string
 }
 
-export default function ProductPrice({ priceRange, className }: Props) {
+export default function ProductPrice({ priceRange, className = '' }: Props) {
   const { regular_price, final_price } = priceRange.minimum_price
   const { percent_off } = priceRange.minimum_price.discount
 

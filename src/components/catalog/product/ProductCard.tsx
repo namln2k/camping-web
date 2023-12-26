@@ -1,9 +1,9 @@
+import ProductPrice from '@/components/catalog/product/ProductPrice'
+import ProductRating from '@/components/catalog/product/ProductRating'
 import { CategoryProduct } from '@/types'
 import Image from 'next/image'
-import { IntlProvider } from 'react-intl'
-import ProductPrice from './ProductPrice'
-import ProductRating from './ProductRating'
 import { useRouter } from 'next/navigation'
+import { IntlProvider } from 'react-intl'
 
 interface Props {
   product: CategoryProduct

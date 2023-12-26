@@ -15,7 +15,7 @@ export default async function CategoryNav({ className = '' }: Props) {
       <ErrorFallback
         className={className}
         errors={errors}
-        sectionName="CategoryNav"
+        sectionName="Category Nav"
       />
     )
   }

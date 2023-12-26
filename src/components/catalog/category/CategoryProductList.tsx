@@ -1,14 +1,14 @@
 'use client'
 
+import Pagination from '@/components/Pagination'
+import ProductFilter from '@/components/catalog/category/ProductFilter'
+import ProductCard from '@/components/catalog/product/ProductCard'
 import { PRODUCT_LISTING_PAGE_SIZE } from '@/constants'
 import useCategoryAttributes from '@/hooks/catalog/useCategoryAttributes'
 import useCategoryProducts from '@/hooks/catalog/useCategoryProducts'
 import { upsertQueryParam, upsertQueryParams } from '@/util'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
-import Pagination from '../Pagination'
-import ProductCard from './ProductCard'
-import ProductFilter from './ProductFilter'
 
 interface Props {
   categoryUid: string

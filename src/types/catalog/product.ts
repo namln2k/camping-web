@@ -1,50 +1,4 @@
-import { SearchResult } from "@/types/query"
-
-export interface BreadCrumbNode {
-  category_id: number
-  category_uid: string
-  category_name: string
-  category_level: number
-  category_url_key: string
-}
-
-export interface CategoryNode {
-  id: number
-  uid: string
-  level: number
-  name: string
-  path: string
-  url_path: string
-  url_key: string
-  breadcrumbs?: BreadCrumbNode[]
-  children_count?: number
-  children?: CategoryNode[]
-  is_active?: boolean
-}
-
-export interface CategoryDetail {
-  id: number
-  uid: string
-  level: number
-  name: string
-  path: string
-  url_path: string
-  url_key: string
-  breadcrumbs?: BreadCrumbNode[]
-}
-
-export interface CategoryProduct {
-  sku: string
-  uid: string
-  name: string
-  image: {
-    url: string
-    label: string
-  }
-  price_range: ProductPrice
-  review_count: number
-  rating_summary: number
-}
+import { BreadCrumbNode } from "."
 
 export interface ProductPrice {
   minimum_price: {
@@ -77,10 +31,6 @@ export interface ProductPrice {
   }
 }
 
-export interface CategoryProducts {
-  products: SearchResult<CategoryProduct>
-}
-
 export interface ProductAggregationOption {
   label: string
   value: string
@@ -93,7 +43,40 @@ export interface ProductAggregation {
   options: ProductAggregationOption[]
 }
 
+export interface SwatchData {
+  __typename: string
+  value: string
+}
+
+export interface ConfigurableOption {
+  attribute_code: string
+  attribute_id: string
+  label: string
+  uid: string
+  values: [
+    {
+      uid: string
+      default_label: string
+      label: string
+      store_label: string
+      use_default_value: boolean
+      value_index: number
+      swatch_data?: SwatchData
+    }
+  ]
+}
+
+export interface GalleryEntry {
+  disabled: boolean
+  file: string
+  label: string
+  position: number
+  uid: string
+  url?: string
+}
+
 export interface ProductDetail {
+  __typename: string
   sku: string
   uid: string
   name: string
@@ -121,26 +104,11 @@ export interface ProductDetail {
     url: string
     label: string
   }
-  media_gallery_entries: [
-    {
-      disabled: boolean
-      file: string
-      label: string
-      position: number
-      uid: string
-    }
-  ]
+  media_gallery_entries: GalleryEntry[]
   price_range: ProductPrice
   review_count: number
   rating_summary: number
-  configurable_options: [
-    {
-      attribute_code: string
-      attribute_id: string
-      label: string
-      uid: string
-    }
-  ]
+  configurable_options: ConfigurableOption[]
   custom_attributes: [
     {
       attribute_metadata: string
@@ -161,6 +129,7 @@ export interface ProductDetail {
       attributes: [
         {
           code: string
+          value_index: number
         }
       ]
       product: {

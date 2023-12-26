@@ -31,18 +31,20 @@ const emptyStar = () => (
 export default function ProductRating({
   reviewCount,
   ratingSummary,
-  className,
+  className = '',
 }: Props) {
   const rating = Math.round(((ratingSummary || 0) / 100) * 5)
 
   return (
-    <div className={`flex items-center ${className}`}>
+    <div className={`flex items-center cursor-pointer ${className}`}>
       {Array.from({ length: 5 }, (_, i) => (
         <span key={i}>{i < rating ? filledStar() : emptyStar()}</span>
       ))}
-      <span className="ml-2 text-sm">
-        {`${reviewCount} ${reviewCount === 1 ? 'review' : 'reviews'}`}
-      </span>
+      {reviewCount ?
+        <span className="ml-2 text-sm">
+          {`${reviewCount} ${reviewCount === 1 ? 'review' : 'reviews'}`}
+        </span> :
+        <></>}
     </div>
   )
 }

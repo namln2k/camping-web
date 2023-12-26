@@ -5,7 +5,7 @@ export default async function Home() {
   const [homePage, errors] = await useHome()
 
   if (errors.length) {
-    return <ErrorFallback errors={errors} sectionName="HomePage" />
+    return <ErrorFallback errors={errors} sectionName="Home Page" />
   }
 
   return (

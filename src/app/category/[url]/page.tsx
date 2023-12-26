@@ -1,6 +1,6 @@
 import BreadCrumb from '@/components/Breadcrumb'
 import ErrorFallback from '@/components/ErrorFallback'
-import CategoryProductList from '@/components/catalog/CategoryProductList'
+import CategoryProductList from '@/components/catalog/category/CategoryProductList'
 import useCategoryDetail from '@/hooks/catalog/useCategoryDetail'
 
 interface Props {
@@ -13,7 +13,7 @@ export default async function CategoryDetail({ params: { url } }: Props) {
   const [category, errors] = await useCategoryDetail(url)
 
   if (errors.length || !category) {
-    return <ErrorFallback errors={errors} sectionName="CategoryPage" />
+    return <ErrorFallback errors={errors} sectionName="Category Page" />
   }
 
   return (

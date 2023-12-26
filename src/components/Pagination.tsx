@@ -1,5 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
-import LoadingFallback from './LoadingFallback'
+import LoadingFallback from '@/components/LoadingFallback'
 
 interface Props {
   currentPage?: number

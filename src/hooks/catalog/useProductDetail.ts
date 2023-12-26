@@ -1,143 +1,19 @@
 import { Error, ProductDetail } from "@/types"
-import { OperationVariables, gql, useSuspenseQuery } from "@apollo/client"
+import { OperationVariables, useSuspenseQuery } from "@apollo/client"
 import { RefetchFunction } from "@apollo/client/react/hooks/useSuspenseQuery"
-import { useState } from "react"
+import { productDetailQuery } from "./productDetail.gql"
 
 export default function useProductDetail(
-  sku: string | number
+  sku: string
 ): [ProductDetail | undefined, Error[], RefetchFunction<any, any>] {
   const {
     data: { products: productList },
     error,
-    refetch,
+    refetch
   } = useSuspenseQuery<
     { products: { items: ProductDetail[] } },
     OperationVariables
-  >(
-    gql`
-      query {
-        products(filter: { sku: { eq: "${sku}" } }) {
-          items {
-            id
-            uid
-            categories {
-              uid
-              breadcrumbs {
-                category_uid
-                category_name
-              }
-            }
-            description {
-              html
-            }
-            short_description {
-              html
-            }
-            id
-            uid
-            media_gallery_entries {
-              uid
-              label
-              position
-              disabled
-              file
-            }
-            meta_description
-            name
-            price {
-              regularPrice {
-                amount {
-                  currency
-                  value
-                }
-              }
-            }
-            price_range {
-              maximum_price {
-                final_price {
-                  currency
-                  value
-                }
-                regular_price {
-                  value
-                  currency
-                }
-                discount {
-                  amount_off
-                  percent_off
-                }
-              }
-            }
-            sku
-            small_image {
-              url
-            }
-            stock_status
-            url_key
-            ... on ConfigurableProduct {
-              configurable_options {
-                attribute_code
-                attribute_id
-                uid
-                label
-                values {
-                  uid
-                  default_label
-                  label
-                  store_label
-                  use_default_value
-                  value_index
-                  swatch_data {
-                    ... on ImageSwatchData {
-                      thumbnail
-                    }
-                    value
-                  }
-                }
-              }
-              variants {
-                attributes {
-                  code
-                  value_index
-                }
-                product {
-                  uid
-                  media_gallery_entries {
-                    uid
-                    disabled
-                    file
-                    label
-                    position
-                  }
-                  sku
-                  stock_status
-                  price {
-                    regularPrice {
-                      amount {
-                        currency
-                        value
-                      }
-                    }
-                  }
-                  price_range {
-                    maximum_price {
-                      final_price {
-                        currency
-                        value
-                      }
-                      discount {
-                        amount_off
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    `
-  )
+  >(productDetailQuery(sku))
 
   if (productList.items.length === 1) {
     let productData = productList.items[0]
@@ -146,10 +22,21 @@ export default function useProductDetail(
     const categoryForBreadcrumb = productData.categories.reduce((a, b) => {
       return (a.breadcrumbs?.length || 0) > (b.breadcrumbs?.length || 0) ? a : b
     }, productData.categories[0])
-
     productData = {
       ...productData,
-      category: categoryForBreadcrumb,
+      category: categoryForBreadcrumb
+    }
+
+    // Get media URLs for gallery entries
+    productData = {
+      ...productData,
+      media_gallery_entries: productData.media_gallery_entries
+        .map((entry) => ({
+          ...entry,
+          url: `${process.env.MAGENTO_BASE_MEDIA_CATALOG_PRODUCT_URL}${entry.file}`
+        }))
+        .sort((a, b) => a.position - b.position)
+        .filter((entry) => entry.disabled === false)
     }
 
     return [productData, error ? [error as Error] : [], refetch]

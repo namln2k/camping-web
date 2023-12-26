@@ -20,7 +20,7 @@ export default async function BreadCrumb({
             {breadcrumb?.map((node, index) => (
               <React.Fragment key={index}>
                 <Link
-                  href={`/category/${node.category_id}`}
+                  href={`/category/${node.category_url_key}`}
                   className="hover:underline hover:text-blue-700"
                 >
                   <span>{node.category_name}</span>
