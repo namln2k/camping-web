@@ -9,14 +9,10 @@ export default async function Home() {
   }
 
   return (
-    <>
-      <main>
-        {homePage.homePageBlock && (
-          <div
-            dangerouslySetInnerHTML={{ __html: homePage.homePageBlock }}
-          ></div>
-        )}
-      </main>
-    </>
+    <main>
+      {homePage.homePageBlock && (
+        <div dangerouslySetInnerHTML={{ __html: homePage.homePageBlock }}></div>
+      )}
+    </main>
   )
 }

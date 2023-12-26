@@ -3,75 +3,6 @@
 import { ProductAggregation } from '@/types'
 import { useEffect, useState } from 'react'
 
-const filters = [
-  {
-    name: 'color',
-    label: 'Color',
-    options: [
-      {
-        label: 'Black',
-        value: 'black',
-      },
-      {
-        label: 'Blue',
-        value: 'blue',
-      },
-      {
-        label: 'Red',
-        value: 'red',
-      },
-      {
-        label: 'White',
-        value: 'white',
-      },
-    ],
-  },
-  {
-    name: 'price',
-    label: 'Price',
-    options: [
-      {
-        label: 'Under $10',
-        value: 'under-10',
-      },
-      {
-        label: '$10 to $100',
-        value: '10-100',
-      },
-      {
-        label: '$100 to $500',
-        value: '100-500',
-      },
-      {
-        label: '$500 & Above',
-        value: 'above-500',
-      },
-    ],
-  },
-  {
-    name: 'brand',
-    label: 'Brand',
-    options: [
-      {
-        label: 'Brand 1',
-        value: 'brand-1',
-      },
-      {
-        label: 'Brand 2',
-        value: 'brand-2',
-      },
-      {
-        label: 'Brand 3',
-        value: 'brand-3',
-      },
-      {
-        label: 'Brand 4',
-        value: 'brand-4',
-      },
-    ],
-  },
-]
-
 interface Props {
   attributeFilters: ProductAggregation[]
   onFilterChange: (filterValues: Record<string, string>) => void
@@ -120,10 +51,10 @@ export default function ProductFilter({
   }
 
   return (
-    <>
+    <div>
       {attributeFilters.map((filter) => (
         <div key={filter.attribute_code} className="border-t py-8">
-          <h4>{filter.label}</h4>
+          <p className="font-semibold">{filter.label}</p>
           <ul className="mt-2">
             {filter.options.map((option) => (
               <li key={option.value} className="pt-3">
@@ -136,13 +67,13 @@ export default function ProductFilter({
                       handleInputChange(filter.attribute_code, option.value)
                     }}
                   />
-                  {option.label}
+                  <span className="pl-2">{option.label}</span>
                 </label>
               </li>
             ))}
           </ul>
         </div>
       ))}
-    </>
+    </div>
   )
 }

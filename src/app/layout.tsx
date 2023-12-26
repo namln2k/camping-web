@@ -22,18 +22,6 @@ export default function RootLayout({
     <html lang="en">
       <ApolloWrapper>
         <body suppressHydrationWarning={true} className={inter.className}>
-          <link
-            rel="stylesheet"
-            href={`${process.env.MAGENTO_BASE_URL}/media/styles.css`}
-          />
-          <link
-            rel="stylesheet"
-            href={`${process.env.MAGENTO_STYLESHEETS_BASE_URL}/styles-m.css`}
-          />
-          <link
-            rel="stylesheet"
-            href={`${process.env.MAGENTO_STYLESHEETS_BASE_URL}/styles-l.css`}
-          />
           <div>
             <div className="h-40 md:w-full md:max-w-[1280px] mx-auto px-[15px] md:px-[20px] flex items-center justify-between">
               <Link href="/">

@@ -1,11 +1,11 @@
-import { BreadCrumbNode, CategoryDetail } from '@/types'
+import { BreadCrumbNode } from '@/types'
 import { ChevronRightIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 import React from 'react'
 
 interface Props {
   breadcrumb: BreadCrumbNode[] | undefined
-  currentNode: CategoryDetail | undefined
+  currentNode: string
 }
 
 export default async function BreadCrumb({
@@ -13,28 +13,33 @@ export default async function BreadCrumb({
   currentNode,
 }: Props) {
   return (
-    <>
-      {breadcrumb && (
+    <div>
+      {breadcrumb?.length && (
         <>
-          {breadcrumb?.map((node, index) => (
-            <React.Fragment key={index}>
-              <Link href={`/category/${node.category_id}`}>
-                <span>{node.category_name}</span>
-              </Link>
+          <span>
+            {breadcrumb?.map((node, index) => (
+              <React.Fragment key={index}>
+                <Link
+                  href={`/category/${node.category_id}`}
+                  className="hover:underline hover:text-blue-700"
+                >
+                  <span>{node.category_name}</span>
+                </Link>
 
-              {index < breadcrumb.length - 1 && (
-                <span className="mx-8">
-                  <ChevronRightIcon className="inline-block w-6 h-6 mb-1" />
-                </span>
-              )}
-            </React.Fragment>
-          ))}
-          <span className="mx-8">
-            <ChevronRightIcon className="inline-block w-6 h-6 mb-1" />
+                {index < breadcrumb.length - 1 && (
+                  <span className="mx-8">
+                    <ChevronRightIcon className="inline-block w-5 h-5 mb-1" />
+                  </span>
+                )}
+              </React.Fragment>
+            ))}
+            <span className="mx-8">
+              <ChevronRightIcon className="inline-block w-5 h-5 mb-1" />
+            </span>
           </span>
+          <span className="text-gray-600">{currentNode}</span>
         </>
       )}
-      <span className="text-gray-600">{currentNode?.name}</span>
-    </>
+    </div>
   )
 }

@@ -1,4 +1,4 @@
-import { SearchResult } from '@/types/query'
+import { SearchResult } from "@/types/query"
 
 export interface BreadCrumbNode {
   category_id: number
@@ -33,7 +33,7 @@ export interface CategoryDetail {
   breadcrumbs?: BreadCrumbNode[]
 }
 
-export interface Product {
+export interface CategoryProduct {
   sku: string
   uid: string
   name: string
@@ -41,50 +41,44 @@ export interface Product {
     url: string
     label: string
   }
-  small_image: {
-    url: string
-    label: string
+  price_range: ProductPrice
+  review_count: number
+  rating_summary: number
+}
+
+export interface ProductPrice {
+  minimum_price: {
+    regular_price: {
+      value: number
+      currency: string
+    }
+    final_price: {
+      value: number
+      currency: string
+    }
+    discount: {
+      amount_off: number
+      percent_off: number
+    }
   }
-  media_gallery: [
-    {
-      url: string
-      label: string
+  maximum_price: {
+    regular_price: {
+      value: number
+      currency: string
     }
-  ]
-  price_range: {
-    minimum_price: {
-      regular_price: {
-        value: number
-        currency: string
-      }
-      final_price: {
-        value: number
-        currency: string
-      }
-      discount: {
-        amount_off: number
-        percent_off: number
-      }
+    final_price: {
+      value: number
+      currency: string
     }
-    maximum_price: {
-      regular_price: {
-        value: number
-        currency: string
-      }
-      final_price: {
-        value: number
-        currency: string
-      }
-      discount: {
-        amount_off: number
-        percent_off: number
-      }
+    discount: {
+      amount_off: number
+      percent_off: number
     }
   }
 }
 
 export interface CategoryProducts {
-  products: SearchResult<Product>
+  products: SearchResult<CategoryProduct>
 }
 
 export interface ProductAggregationOption {
@@ -97,4 +91,111 @@ export interface ProductAggregation {
   count: number
   label: string
   options: ProductAggregationOption[]
+}
+
+export interface ProductDetail {
+  sku: string
+  uid: string
+  name: string
+  categories: [
+    {
+      uid: string
+      category_name: string
+      category_level: number
+      breadcrumbs: BreadCrumbNode[]
+    }
+  ]
+  category?: {
+    uid: string
+    category_name: string
+    category_level: number
+    breadcrumbs: BreadCrumbNode[]
+  } // Custom attribute for breadcrumb in product detail page
+  description: {
+    html: string
+  }
+  short_description: {
+    html: string
+  }
+  image: {
+    url: string
+    label: string
+  }
+  media_gallery_entries: [
+    {
+      disabled: boolean
+      file: string
+      label: string
+      position: number
+      uid: string
+    }
+  ]
+  price_range: ProductPrice
+  review_count: number
+  rating_summary: number
+  configurable_options: [
+    {
+      attribute_code: string
+      attribute_id: string
+      label: string
+      uid: string
+    }
+  ]
+  custom_attributes: [
+    {
+      attribute_metadata: string
+      entered_attribute_value: string
+      selected_attribute_options: [
+        {
+          attribute_option: {
+            is_default: boolean
+            label: string
+            uid: string
+          }
+        }
+      ]
+    }
+  ]
+  variants: [
+    {
+      attributes: [
+        {
+          code: string
+        }
+      ]
+      product: {
+        uid: string
+        media_gallery_entries: [
+          {
+            uid: string
+            disabled: boolean
+            file: string
+            label: string
+            position: number
+          }
+        ]
+        sku: string
+        stock_status: number
+        price: {
+          regularPrice: {
+            amount: {
+              currency: string
+              value: number
+            }
+          }
+        }
+        price_range: {
+          maximum_price: {
+            final_price: {
+              currency: string
+              value: number
+            }
+            discount: {
+              amount_off: number
+            }
+          }
+        }
+      }
+    }
+  ]
 }

@@ -6,7 +6,6 @@ import useCategoryProducts from '@/hooks/catalog/useCategoryProducts'
 import { upsertQueryParam, upsertQueryParams } from '@/util'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
-import { IntlProvider } from 'react-intl'
 import Pagination from '../Pagination'
 import ProductCard from './ProductCard'
 import ProductFilter from './ProductFilter'
@@ -26,7 +25,7 @@ export default function CategoryProductList({ categoryUid }: Props) {
   })
   const [productsData, error, refetchProducts] = useCategoryProducts(
     categoryUid,
-    currentPage || 1
+    currentPage
   )
 
   useEffect(() => {
@@ -34,6 +33,8 @@ export default function CategoryProductList({ categoryUid }: Props) {
 
     if (pageNumber) {
       setCurrentPage(Number(pageNumber))
+    } else {
+      setCurrentPage(1)
     }
 
     let filterQuery = ''
@@ -59,45 +60,37 @@ export default function CategoryProductList({ categoryUid }: Props) {
     [pathname, router, searchParams]
   )
 
-  return productsData?.items?.length ? (
-    <>
-      <IntlProvider locale="en">
-        <div className="mt-10 md:flex">
-          <div className="w-full md:w-[20%]">
-            <h3 className="my-4">Shopping options</h3>
-            <div className="mt-8">
-              <ProductFilter
-                onFilterChange={handleFilterChange}
-                attributeFilters={applicableFilters}
-              />
-            </div>
-          </div>
-          <div className="w-full md:w-[80%] pl-0 md:pl-12 ">
-            <div className="px-0 md:pl-16 md:pr-24">
-              <Pagination
-                currentPage={currentPage || 1}
-                pageSize={PRODUCT_LISTING_PAGE_SIZE}
-                totalCount={productsData.total_count}
-                onPageChange={(page) => {
-                  router.push(
-                    pathname +
-                      '?' +
-                      upsertQueryParam(searchParams, 'page', page)
-                  )
-                }}
-              />
-            </div>
-            <ul className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-12 gap-x-8 mt-10 mb-5">
-              {productsData?.items.map((product) => (
-                <li key={product.uid}>
-                  <ProductCard product={product} />
-                </li>
-              ))}
-            </ul>
-          </div>
+  return productsData?.items?.length > 0 ? (
+    <div className="mt-6 md:flex">
+      <div className="w-full md:w-[16%]">
+        <p className="my-2 text-lg">Shopping options</p>
+        <div className="mt-4 pr-4">
+          <ProductFilter
+            onFilterChange={handleFilterChange}
+            attributeFilters={applicableFilters}
+          />
         </div>
-      </IntlProvider>
-    </>
+      </div>
+      <div className="w-full md:w-[84%] pl-0 md:pl-8 ">
+        <Pagination
+          currentPage={currentPage}
+          pageSize={PRODUCT_LISTING_PAGE_SIZE}
+          totalCount={productsData.total_count}
+          onPageChange={(page) => {
+            router.push(
+              pathname + '?' + upsertQueryParam(searchParams, 'page', page)
+            )
+          }}
+        />
+        <ul className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-12 gap-x-6 mt-10 mb-5">
+          {productsData?.items.map((product) => (
+            <li key={product.sku} className="h-full">
+              <ProductCard product={product} className="h-full" />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   ) : (
     <div className="mt-10">No products found!</div>
   )
