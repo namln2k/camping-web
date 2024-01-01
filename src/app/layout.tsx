@@ -23,7 +23,7 @@ export default function RootLayout({
       <ApolloWrapper>
         <body suppressHydrationWarning={true} className={inter.className}>
           <div>
-            <div className="h-40 md:w-full md:max-w-[1280px] mx-auto px-[15px] md:px-[20px] flex items-center justify-between">
+            <div className="h-24 md:w-full md:max-w-[1440px] mx-auto px-[15px] md:px-[20px] flex items-center justify-between">
               <Link href="/">
                 <Image
                   alt="logo"
@@ -37,7 +37,7 @@ export default function RootLayout({
             </div>
           </div>
           <CategoryNav />
-          <div className="md:w-full md:max-w-[1280px] mx-auto px-[15px] md:px-[20px] mt-6">
+          <div className="md:w-full md:max-w-[1440px] mx-auto px-[15px] md:px-[20px] mt-6">
             {children}
           </div>
         </body>

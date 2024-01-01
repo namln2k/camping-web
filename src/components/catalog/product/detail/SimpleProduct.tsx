@@ -12,12 +12,12 @@ export default function SimpleProduct({ product, className = '' }: Props) {
 
     return (
         <div className="flex flex-wrap mb-24 -mx-4">
-            <div className="w-full px-4 mb-8 md:w-1/2 md:mb-0">
+            <div className="w-full px-4 mb-8 md:w-[60%] md:mb-0">
                 <div className="sticky top-0 overflow-hidden ">
                     <ProductGallery galleryEntries={media_gallery_entries} />
                 </div>
             </div>
-            <div className="w-full px-4 md:w-1/2">
+            <div className="w-full px-4 md:w-[40%]">
                 <div className="lg:pl-20">
                     <div className="mb-6 ">
                         <h2 className="max-w-xl mt-6 mb-6 text-xl font-semibold leading-loose tracking-wide text-gray-700 md:text-2xl dark:text-gray-300">

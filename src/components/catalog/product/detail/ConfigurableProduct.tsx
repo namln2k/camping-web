@@ -1,14 +1,26 @@
 import ProductGallery from "@/components/catalog/product/ProductGallery";
+import ProductPartialPrice from "@/components/catalog/product/ProductPartialPrice";
 import ProductRating from "@/components/catalog/product/ProductRating";
 import Swatch from "@/components/catalog/product/detail/Swatch";
-import { ConfigurableOption, ProductDetail } from "@/types";
+import { ConfigurableOption, ConfigurableOptionValue, ProductDetail, ProductVariant } from "@/types";
 
 interface Props {
     product: ProductDetail
     className?: string
 }
 
-const renderConfigurableOptions = (configurableOptions: ConfigurableOption[]) => {
+const renderConfigurableOptions = (configurableOptions: ConfigurableOption[], variants: ProductVariant[]) => {
+    console.log(configurableOptions);
+    
+    const handleOptionSelect = ({ uid, value_index }: ConfigurableOptionValue) => {
+        // Get product variant by selected option's uid and value_index
+        // const variant = variants.find((variant) => {
+        //     return variant.product.sku === uid && variant.product.media_gallery_entries[0].position === value_index
+        // })
+        console.log(variants[0]);
+        
+    }
+
     return configurableOptions.map((option) => {
         const { attribute_code, label, values } = option
         return (
@@ -20,18 +32,19 @@ const renderConfigurableOptions = (configurableOptions: ConfigurableOption[]) =>
                     {values.map((value) => {
                         const { uid, label, swatch_data } = value
 
-                        if (swatch_data) {
-                            return (
-                                <Swatch data={swatch_data} key={uid} />
-                            )
-                        }
-
                         return (
-                            <div
-                                key={uid}
-                                className="flex items-center justify-center w-12 h-12 mr-4 mb-4 text-sm text-center text-gray-700 bg-gray-100 border rounded-full cursor-pointer hover:bg-gray-300"
-                            >
-                                {label}
+                            <div key={uid} className="flex flex-wrap gap-2 p-2" onClick={() => handleOptionSelect(value)}>
+                                {swatch_data ? (
+                                    <div className="w-12 h-12 hover:shadow-[0_0_6px_0_rgb(71,139,255)] rounded">
+                                        <Swatch {...swatch_data} key={uid} />
+                                    </div>
+                                ) : (
+                                    <div
+                                        key={uid}
+                                        className="flex items-center justify-center w-12 h-12 mr-4 mb-4 text-sm text-center text-gray-700 bg-gray-100 border rounded-full cursor-pointer hover:shadow-[0_0_4px_0_rgb(71,139,255)]">
+                                        {label}
+                                    </div>
+                                )}
                             </div>
                         )
                     })}
@@ -42,24 +55,34 @@ const renderConfigurableOptions = (configurableOptions: ConfigurableOption[]) =>
 }
 
 export default function ConfigurableProduct({ product, className = '' }: Props) {
-    const { name: productName, price_range, category, rating_summary, review_count, variants, configurable_options, media_gallery_entries } = product
+    const {
+        name: productName,
+        price_range,
+        category,
+        rating_summary,
+        review_count,
+        variants,
+        configurable_options,
+        media_gallery_entries
+    } = product
 
     return (
         <div className="flex flex-wrap mb-24 -mx-4">
-            <div className="w-full px-4 mb-8 md:w-1/2 md:mb-0">
+            <div className="w-full px-4 mb-8 md:w-[60%] md:mb-0">
                 <div className="overflow-hidden mt-8">
                     <ProductGallery galleryEntries={media_gallery_entries} />
                 </div>
             </div>
-            <div className="w-full px-4 md:w-1/2">
+            <div className="w-full px-4 md:w-[40%]">
                 <div className="lg:pl-20">
                     <div className="mb-6">
                         <h2 className="max-w-xl mt-6 mb-6 text-2xl font-semibold leading-loose tracking-wide text-gray-700 md:text-3xl">
                             {productName}
                         </h2>
+                        <ProductPartialPrice price={price_range.maximum_price} />
                         <ProductRating ratingSummary={rating_summary} reviewCount={review_count} />
                     </div>
-                    {renderConfigurableOptions(configurable_options)}
+                    {renderConfigurableOptions(configurable_options, variants)}
                     <div className="flex flex-wrap items-center mb-6">
                         <div className="mb-4 mr-4 lg:mb-0">
                             <div className="w-28">

@@ -16,7 +16,7 @@ export default async function BreadCrumb({
     <div>
       {breadcrumb?.length && (
         <>
-          <span>
+          <span className=''>
             {breadcrumb?.map((node, index) => (
               <React.Fragment key={index}>
                 <Link
@@ -27,13 +27,13 @@ export default async function BreadCrumb({
                 </Link>
 
                 {index < breadcrumb.length - 1 && (
-                  <span className="mx-8">
+                  <span className="mx-3">
                     <ChevronRightIcon className="inline-block w-5 h-5 mb-1" />
                   </span>
                 )}
               </React.Fragment>
             ))}
-            <span className="mx-8">
+            <span className="mx-3">
               <ChevronRightIcon className="inline-block w-5 h-5 mb-1" />
             </span>
           </span>

@@ -24,7 +24,7 @@ export default async function CategoryNav({ className = '' }: Props) {
     <div
       className={`category-nav w-full bg-gray-100 text-[#333333] ${className}`}
     >
-      <ul className="flex flex-col md:flex-row font-semibold md:w-full md:max-w-[1280px] mx-auto">
+      <ul className="flex flex-col md:flex-row font-semibold md:w-full md:max-w-[1440px] mx-auto">
         {categories.map((category) => (
           <li
             key={category.url_key}

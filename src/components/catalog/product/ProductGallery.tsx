@@ -36,18 +36,18 @@ export default function ProductGallery({ galleryEntries, className = '', activeI
                     </div>
                 </div>
             )}
-            <div className="mb-6 lg:h-96 border">
+            <div className="mb-6 lg:h-[600px] border">
                 <div className="w-full h-full relative">
-                    <div className="absolute h-full w-12 left-0 top-0 inline-flex justify-center items-center cursor-pointer bg-gray-400 bg-opacity-20 hover:bg-opacity-50 transition-colors" onClick={toPrev}>
+                    <div className="absolute h-full w-16 left-0 top-0 inline-flex justify-center items-center cursor-pointer bg-gray-400 bg-opacity-20 hover:bg-opacity-50 transition-colors" onClick={toPrev}>
                         <span className="inline-block w-8 h-8 text-blue-600">
                             <ChevronLeftIcon width={32} height={32} />
                         </span>
                     </div>
                     <Swipe onSwipeLeft={toNext} onSwipeRight={toPrev}
                         className="w-full h-full">
-                        <Image width={200} height={200} className="object-contain w-full lg:h-full cursor-pointer" src={`${galleryEntries[activeIndex].url}`} alt="Main image" onClick={() => { setPreviewIndex(activeIndex) }} />
+                        <Image width={600} height={600} className="object-contain w-full lg:h-full cursor-pointer" src={`${galleryEntries[activeIndex].url}`} alt="Main image" onClick={() => { setPreviewIndex(activeIndex) }} />
                     </Swipe>
-                    <div className="absolute h-full w-12 right-0 top-0 inline-flex justify-center items-center cursor-pointer bg-gray-400 bg-opacity-20 hover:bg-opacity-50 transition-colors" onClick={toNext}>
+                    <div className="absolute h-full w-16 right-0 top-0 inline-flex justify-center items-center cursor-pointer bg-gray-400 bg-opacity-20 hover:bg-opacity-50 transition-colors" onClick={toNext}>
                         <span className="inline-block w-8 h-8 text-blue-600">
                             <ChevronRightIcon width={32} height={32} />
                         </span>
@@ -75,7 +75,7 @@ export default function ProductGallery({ galleryEntries, className = '', activeI
                         onClick={() => { setActiveIndex(index) }}
                         onDoubleClick={() => { setPreviewIndex(index) }}
                     >
-                        <div className={`border hover:border-blue-400 hover:scale-105 transition-all cursor-pointer ${index === activeIndex ? 'border-blue-600 scale-105' : ''}`}>
+                        <div className={`border hover:border-blue-400 hover:scale-105 transition-all cursor-pointer ${index === activeIndex ? '@apply shadow-[0_0_8px_0_rgb(71,139,255)] scale-105' : ''}`}>
                             <Image width={200} height={200} className="object-contain w-full lg:h-28" src={`${entry.url}`} alt="Image" />
                         </div>
                     </div>

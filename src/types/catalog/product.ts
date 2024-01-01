@@ -1,34 +1,27 @@
 import { BreadCrumbNode } from "."
 
+export interface ProductPartialPrice {
+  regular_price: {
+    value: number
+    currency: string
+  }
+  final_price: {
+    value: number
+    currency: string
+  }
+  discount: {
+    amount_off: number
+    percent_off: number
+  }
+}
+
+export interface ProductMinimumPrice extends ProductPartialPrice {}
+
+export interface ProductMaximumPrice extends ProductPartialPrice {}
+
 export interface ProductPrice {
-  minimum_price: {
-    regular_price: {
-      value: number
-      currency: string
-    }
-    final_price: {
-      value: number
-      currency: string
-    }
-    discount: {
-      amount_off: number
-      percent_off: number
-    }
-  }
-  maximum_price: {
-    regular_price: {
-      value: number
-      currency: string
-    }
-    final_price: {
-      value: number
-      currency: string
-    }
-    discount: {
-      amount_off: number
-      percent_off: number
-    }
-  }
+  minimum_price: ProductMinimumPrice
+  maximum_price: ProductMaximumPrice
 }
 
 export interface ProductAggregationOption {
@@ -48,22 +41,22 @@ export interface SwatchData {
   value: string
 }
 
+export interface ConfigurableOptionValue {
+  uid: string
+  default_label: string
+  label: string
+  store_label: string
+  use_default_value: boolean
+  value_index: number
+  swatch_data?: SwatchData
+}
+
 export interface ConfigurableOption {
   attribute_code: string
   attribute_id: string
   label: string
   uid: string
-  values: [
-    {
-      uid: string
-      default_label: string
-      label: string
-      store_label: string
-      use_default_value: boolean
-      value_index: number
-      swatch_data?: SwatchData
-    }
-  ]
+  values: ConfigurableOptionValue[]
 }
 
 export interface GalleryEntry {
@@ -73,6 +66,49 @@ export interface GalleryEntry {
   position: number
   uid: string
   url?: string
+}
+
+export interface ProductVariant {
+  attributes: [
+    {
+      code: string
+      uid: string
+      value_index: number
+    }
+  ]
+  product: {
+    uid: string
+    media_gallery_entries: [
+      {
+        uid: string
+        disabled: boolean
+        file: string
+        label: string
+        position: number
+      }
+    ]
+    sku: string
+    stock_status: number
+    price: {
+      regularPrice: {
+        amount: {
+          currency: string
+          value: number
+        }
+      }
+    }
+    price_range: {
+      maximum_price: {
+        final_price: {
+          currency: string
+          value: number
+        }
+        discount: {
+          amount_off: number
+        }
+      }
+    }
+  }
 }
 
 export interface ProductDetail {
@@ -124,47 +160,5 @@ export interface ProductDetail {
       ]
     }
   ]
-  variants: [
-    {
-      attributes: [
-        {
-          code: string
-          value_index: number
-        }
-      ]
-      product: {
-        uid: string
-        media_gallery_entries: [
-          {
-            uid: string
-            disabled: boolean
-            file: string
-            label: string
-            position: number
-          }
-        ]
-        sku: string
-        stock_status: number
-        price: {
-          regularPrice: {
-            amount: {
-              currency: string
-              value: number
-            }
-          }
-        }
-        price_range: {
-          maximum_price: {
-            final_price: {
-              currency: string
-              value: number
-            }
-            discount: {
-              amount_off: number
-            }
-          }
-        }
-      }
-    }
-  ]
+  variants: ProductVariant[]
 }

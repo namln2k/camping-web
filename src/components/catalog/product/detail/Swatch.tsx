@@ -1,15 +1,11 @@
 import { SwatchData } from "@/types";
 
-interface Props {
-    data: SwatchData
-}
-
-const renderSwatch = ({ __typename, value }: SwatchData) => {
+export default function Swatch({ __typename, value }: SwatchData) {
     switch (__typename) {
         case 'ColorSwatchData':
             return (
                 <div
-                    className="w-12 h-12 mr-4 mb-4 border rounded cursor-pointer"
+                    className="w-full h-full mr-4 mb-4 rounded cursor-pointer"
                     style={{ backgroundColor: value }}
                 >
                 </div>
@@ -17,7 +13,7 @@ const renderSwatch = ({ __typename, value }: SwatchData) => {
         case 'ImageSwatchData':
             return (
                 <div
-                    className="w-12 h-12 mr-4 mb-4 border rounded cursor-pointer"
+                    className="w-full h-full mr-4 mb-4 rounded cursor-pointer"
                     style={{ backgroundImage: `url(${value})` }
                     }
                 >
@@ -26,7 +22,7 @@ const renderSwatch = ({ __typename, value }: SwatchData) => {
         case 'TextSwatchData':
             return (
                 <div
-                    className="flex items-center justify-center w-12 h-12 mr-4 mb-4 text-sm text-center text-gray-700 border border-black rounded cursor-pointer hover:bg-gray-300"
+                    className="flex items-center justify-center w-full h-full mr-4 mb-4 text-sm text-center text-gray-700 border border-blue-400 rounded cursor-pointer"
                 >
                     {value}
                 </div>
@@ -34,12 +30,4 @@ const renderSwatch = ({ __typename, value }: SwatchData) => {
         default:
             return <></>
     }
-}
-
-export default function Swatch({ data: { __typename, value }, ...props }: Props) {
-    return (
-        <div {...props}>
-            {renderSwatch({ __typename, value })}
-        </div>
-    )
 }

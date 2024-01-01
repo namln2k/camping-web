@@ -57,6 +57,8 @@ export function productDetailQuery(sku: string) {
                     }
                 }
             }
+            review_count
+            rating_summary
             sku
             small_image {
                 url
@@ -87,6 +89,7 @@ export function productDetailQuery(sku: string) {
                 variants {
                     attributes {
                         code
+                        uid
                         value_index
                     }
                     product {

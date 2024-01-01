@@ -1,4 +1,6 @@
 {
     "prettier.trailingComma": "none",
-    "editor.fontSize": 14
+    "editor.fontSize": 14,
+    "prettier.jsxSingleQuote": false,
+    "prettier.singleQuote": false
 }

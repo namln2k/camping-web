@@ -1,14 +1,13 @@
-import { ProductPrice } from '@/types'
+import { ProductPartialPrice } from '@/types'
 import { FormattedNumber } from 'react-intl'
 
 interface Props {
-  priceRange: ProductPrice
+  price: ProductPartialPrice
   className?: string
 }
 
-export default function ProductPrice({ priceRange, className = '' }: Props) {
-  const { regular_price, final_price } = priceRange.minimum_price
-  const { percent_off } = priceRange.minimum_price.discount
+export default function ProductPartialPrice({ price, className = '' }: Props) {
+  const { regular_price, final_price, discount: { percent_off } } = price
 
   return (
     <div>

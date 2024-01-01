@@ -1,4 +1,4 @@
-import ProductPrice from '@/components/catalog/product/ProductPrice'
+import ProductPartialPrice from '@/components/catalog/product/ProductPartialPrice'
 import ProductRating from '@/components/catalog/product/ProductRating'
 import { CategoryProduct } from '@/types'
 import Image from 'next/image'
@@ -36,9 +36,9 @@ export default function ProductCard({ product, className = '' }: Props) {
         </div>
         <div className="mt-6">
           <IntlProvider locale="en">
-            <ProductPrice
+            <ProductPartialPrice
               className="inline-flex"
-              priceRange={{ ...product.price_range }}
+              price={{ ...product.price_range.minimum_price }}
             />
           </IntlProvider>
         </div>
