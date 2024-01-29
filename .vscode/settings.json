@@ -1,6 +1,7 @@
 {
-    "prettier.trailingComma": "none",
+    "prettier.trailingComma": "es5",
     "editor.fontSize": 14,
-    "prettier.jsxSingleQuote": false,
-    "prettier.singleQuote": false
+    "prettier.jsxSingleQuote": true,
+    "prettier.singleQuote": true,
+    "html.completion.attributeDefaultValue": "singlequotes"
 }
