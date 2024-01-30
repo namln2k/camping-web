@@ -1,9 +1,9 @@
 import ProductPartialPrice from '@/components/catalog/product/ProductPartialPrice'
 import ProductRating from '@/components/catalog/product/ProductRating'
 import { CategoryProduct } from '@/types'
-import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { IntlProvider } from 'react-intl'
+import ProductImage from './ProductImage'
 
 interface Props {
   product: CategoryProduct
@@ -20,7 +20,7 @@ export default async function ProductCard({ product, className = '' }: Props) {
         router.push(`/product/${product.sku}`)
       }}
     >
-      <Image
+      <ProductImage
         src={product?.image.url}
         alt={product.name}
         width={280}
