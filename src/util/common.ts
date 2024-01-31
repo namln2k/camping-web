@@ -1,3 +1,5 @@
+import { nanoid } from 'nanoid'
+
 export function kebabCaseToCamelCase(str: string) {
   return str.replace(/-./g, (x) => x[1].toUpperCase())
 }
@@ -34,4 +36,8 @@ export function upsertQueryParams(
   }
 
   return result.toString()
+}
+
+export function shortid() {
+  return nanoid(4)
 }
