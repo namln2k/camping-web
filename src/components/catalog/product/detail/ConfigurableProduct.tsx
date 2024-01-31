@@ -2,8 +2,6 @@ import ProductGallery from "@/components/catalog/product/ProductGallery";
 import ProductPartialPrice from "@/components/catalog/product/ProductPartialPrice";
 import ProductRating from "@/components/catalog/product/ProductRating";
 import Swatch from "@/components/catalog/product/detail/Swatch";
-import useProductDetail from "@/hooks/catalog/useProductDetail";
-import useQuery from "@/hooks/useQuery";
 import { ProductDetail, ProductVariant } from "@/types";
 import { useCallback, useEffect, useState } from "react";
 
@@ -88,7 +86,7 @@ export default function ConfigurableProduct({ product, className = '' }: Props) 
         // TODO: Get child product's media gallery entries
 
     }, [selectedProductSku, setMediaGalleryEntries])
-    
+
 
     const renderConfigurableOptions = useCallback(() => {
         return configurable_options.map((option) => {

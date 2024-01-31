@@ -10,7 +10,7 @@ interface Props extends AllHTMLAttributes<HTMLImageElement> {
 }
 
 export default function ProductImage({ src, width = 400, height = 400, alt = '', ...props }: Props) {
-    const { data, error, loading } = useFetch('image/placeholderBase64?type=product');
+    const { data, error, loading } = useFetch(src || 'image/placeholderBase64?type=product');
 
     if (!src) return (
         <Image
