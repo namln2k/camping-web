@@ -21,11 +21,15 @@ export const messagesSlice = createSlice({
         duration: DEFAULT_DURATION,
         ...action.payload,
       })
+
+      return state
     },
     remove: (state, action: PayloadAction<string>) => {
       const index = state.findIndex((item) => item.id === action.payload)
 
       state.splice(index, 1)
+
+      return state
     },
     subtractDuration: (state, action: PayloadAction<string>) => {
       const index = state.findIndex((item) => item.id === action.payload)
@@ -37,6 +41,8 @@ export const messagesSlice = createSlice({
           ? message.duration - DURATION_CHECK_INTERVAL
           : 0,
       })
+
+      return state
     },
   },
 })

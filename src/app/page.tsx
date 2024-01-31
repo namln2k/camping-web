@@ -1,4 +1,5 @@
 import ErrorFallback from '@/components/ErrorFallback'
+import GlobalLoading from '@/components/GlobalLoading'
 import GlobalMessage from '@/components/GlobalMessage'
 import useHome from '@/hooks/home/useHome'
 
@@ -12,6 +13,7 @@ export default async function Home() {
   return (
     <div>
       <GlobalMessage />
+      <GlobalLoading />
       {homePage.homePageBlock && (
         <div dangerouslySetInnerHTML={{ __html: homePage.homePageBlock }}></div>
       )}

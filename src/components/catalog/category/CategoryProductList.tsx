@@ -6,6 +6,7 @@ import ProductCard from '@/components/catalog/product/ProductCard'
 import { PRODUCT_LISTING_PAGE_SIZE } from '@/constants'
 import useCategoryAttributes from '@/hooks/catalog/useCategoryAttributes'
 import useCategoryProducts from '@/hooks/catalog/useCategoryProducts'
+import { useAppDispatch } from '@/lib/redux/hooks'
 import { upsertQueryParam, upsertQueryParams } from '@/util'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
@@ -27,6 +28,7 @@ export default function CategoryProductList({ categoryUid }: Props) {
     categoryUid,
     currentPage
   )
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     const pageNumber = searchParams.get('page')

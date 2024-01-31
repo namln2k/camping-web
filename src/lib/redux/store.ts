@@ -1,10 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit'
+import loadingSlice from '@/lib/redux/features/loading/loadingSlice'
 import messagesSlice from '@/lib/redux/features/messages/messagesSlice'
+import { configureStore } from '@reduxjs/toolkit'
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       messages: messagesSlice,
+      loading: loadingSlice,
     },
   })
 }
