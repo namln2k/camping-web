@@ -1,4 +1,4 @@
-import { BreadCrumbNode } from "."
+import { BreadCrumbNode } from '.'
 
 export interface ProductPartialPrice {
   regular_price: {
@@ -39,6 +39,7 @@ export interface ProductAggregation {
 export interface SwatchData {
   __typename: string
   value: string
+  selected?: boolean
 }
 
 export interface ConfigurableOptionValue {
@@ -78,15 +79,7 @@ export interface ProductVariant {
   ]
   product: {
     uid: string
-    media_gallery_entries: [
-      {
-        uid: string
-        disabled: boolean
-        file: string
-        label: string
-        position: number
-      }
-    ]
+    media_gallery_entries: GalleryEntry[]
     sku: string
     stock_status: number
     price: {

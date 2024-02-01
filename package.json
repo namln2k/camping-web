@@ -10,12 +10,11 @@
   },
   "dependencies": {
     "@apollo/client": "^3.8.8",
-    "@apollo/experimental-nextjs-app-support": "^0.5.2",
+    "@apollo/experimental-nextjs-app-support": "^0.7.0",
     "@heroicons/react": "^2.0.18",
     "@plaiceholder/next": "^3.0.0",
     "@plaiceholder/tailwindcss": "^3.0.0",
     "@reduxjs/toolkit": "^2.1.0",
-    "graphql": "^16.8.1",
     "isomorphic-dompurify": "^1.11.0",
     "nanoid": "^5.0.4",
     "next": "^14.0.4",

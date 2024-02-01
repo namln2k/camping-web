@@ -95,11 +95,11 @@ export function productDetailQuery(sku: string) {
                     product {
                         uid
                         media_gallery_entries {
-                        uid
-                        disabled
-                        file
-                        label
-                        position
+                            uid
+                            disabled
+                            file
+                            label
+                            position
                         }
                         sku
                         stock_status
