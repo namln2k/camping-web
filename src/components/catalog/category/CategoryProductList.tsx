@@ -1,12 +1,11 @@
 'use client'
 
 import Pagination from '@/components/Pagination'
-import ProductFilter from '@/components/catalog/category/ProductFilter'
+import ProductFilters from '@/components/catalog/category/ProductFilters'
 import ProductCard from '@/components/catalog/product/ProductCard'
 import { PRODUCT_LISTING_PAGE_SIZE } from '@/constants'
 import useCategoryAttributes from '@/hooks/catalog/useCategoryAttributes'
 import useCategoryProducts from '@/hooks/catalog/useCategoryProducts'
-import { useAppDispatch } from '@/lib/redux/hooks'
 import { upsertQueryParam, upsertQueryParams } from '@/util'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
@@ -28,7 +27,6 @@ export default function CategoryProductList({ categoryUid }: Props) {
     categoryUid,
     currentPage
   )
-  const dispatch = useAppDispatch()
 
   useEffect(() => {
     const pageNumber = searchParams.get('page')
@@ -67,7 +65,7 @@ export default function CategoryProductList({ categoryUid }: Props) {
       <div className="w-full md:w-[16%]">
         <p className="my-2 text-lg">Shopping options</p>
         <div className="mt-4 pr-4">
-          <ProductFilter
+          <ProductFilters
             onFilterChange={handleFilterChange}
             attributeFilters={applicableFilters}
           />

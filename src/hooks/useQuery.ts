@@ -1,8 +1,9 @@
 import createApolloClient from '@/lib/apollo/client'
-import { DocumentNode } from 'graphql'
+import { QueryOptions } from '@apollo/client'
 
 export default async function useQuery(
-  query: DocumentNode
+  query: QueryOptions['query'],
+  variables?: any
 ): Promise<[any, any]> {
   let data: any = {},
     errors: any = {}
@@ -10,6 +11,7 @@ export default async function useQuery(
   try {
     const response = await createApolloClient().query({
       query,
+      variables,
     })
 
     data = response.data

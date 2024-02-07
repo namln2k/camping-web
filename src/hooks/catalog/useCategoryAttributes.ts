@@ -16,8 +16,8 @@ export default function useCategoryAttributes(
     OperationVariables
   >(
     gql`
-      query {
-        products(filter: { category_uid: { eq: "${categoryUid}" } }) {
+      query GetCategoryAttributes($categoryUid: String!) {
+        products(filter: { category_uid: { eq: $categoryUid } }) {
           aggregations {
             label
             count
@@ -30,7 +30,12 @@ export default function useCategoryAttributes(
           }
         }
       }
-    `
+    `,
+    {
+      variables: {
+        categoryUid,
+      },
+    }
   )
 
   return [filters, error ? [error as Error] : [], refetch]

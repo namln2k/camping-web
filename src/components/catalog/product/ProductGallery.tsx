@@ -36,7 +36,7 @@ export default function ProductGallery({ galleryEntries, className = '', activeI
                     </div>
                 </div>
             )}
-            <div className="mb-6 lg:h-[600px] border">
+            <div className="mb-6 lg:h-[600px] border select-none">
                 <div className="w-full h-full relative">
                     <div className="absolute h-full w-16 left-0 top-0 inline-flex justify-center items-center cursor-pointer bg-gray-400 bg-opacity-20 hover:bg-opacity-50 transition-colors" onClick={toPrev}>
                         <span className="inline-block w-8 h-8 text-blue-600">

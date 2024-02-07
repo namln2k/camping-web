@@ -3,12 +3,12 @@ import { CategoryDetail, Error } from '@/types'
 import { gql } from '@apollo/client'
 
 export default async function useCategoryDetail(
-  urlKey: string | number
+  urlKey: string
 ): Promise<[CategoryDetail | undefined, Error[]]> {
   const [{ categoryList }, errors] = await useQuery(
     gql`
-      query {
-        categoryList(filters: { url_key: { eq: ${JSON.stringify(urlKey)} } }) {
+      query getCategoryDetail($urlKey: String!) {
+        categoryList(filters: { url_key: { eq: $urlKey } }) {
           id
           uid
           level
@@ -25,7 +25,10 @@ export default async function useCategoryDetail(
           }
         }
       }
-    `
+    `,
+    {
+      urlKey: urlKey,
+    }
   )
 
   if (errors.length) {

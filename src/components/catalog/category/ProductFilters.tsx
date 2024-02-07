@@ -1,5 +1,6 @@
 'use client'
 
+import AttributeFilter from '@/components/catalog/category/AttributeFilter'
 import { ProductAggregation } from '@/types'
 import { useEffect, useState } from 'react'
 
@@ -9,7 +10,7 @@ interface Props {
   initialFilter?: Record<string, any>
 }
 
-export default function ProductFilter({
+export default function ProductFilters({
   attributeFilters,
   onFilterChange,
   initialFilter: initialFilterValues = {},
@@ -53,26 +54,13 @@ export default function ProductFilter({
   return (
     <div>
       {attributeFilters.map((filter) => (
-        <div key={filter.attribute_code} className="border-t py-8">
-          <p className="font-semibold">{filter.label}</p>
-          <ul className="mt-2">
-            {filter.options.map((option) => (
-              <li key={option.value} className="pt-3">
-                <label>
-                  <input
-                    type="checkbox"
-                    name={option.value}
-                    value={option.value}
-                    onChange={() => {
-                      handleInputChange(filter.attribute_code, option.value)
-                    }}
-                  />
-                  <span className="pl-2">{option.label}</span>
-                </label>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <AttributeFilter
+          key={filter.attribute_code}
+          attribute_code={filter.attribute_code}
+          label={filter.label}
+          options={filter.options}
+          handleInputChange={handleInputChange}
+        />
       ))}
     </div>
   )

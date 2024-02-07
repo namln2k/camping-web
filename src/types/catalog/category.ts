@@ -1,4 +1,4 @@
-import { ProductPrice } from "."
+import { ProductPrice } from '.'
 
 export interface BreadCrumbNode {
   category_id: number
@@ -9,17 +9,18 @@ export interface BreadCrumbNode {
 }
 
 export interface CategoryNode {
-  id: number
   uid: string
-  level: number
+  include_in_menu: boolean
   name: string
-  path: string
-  url_path: string
+  position: number
   url_key: string
   breadcrumbs?: BreadCrumbNode[]
-  children_count?: number
   children?: CategoryNode[]
   is_active?: boolean
+}
+
+export interface CategoryList {
+  categoryList: CategoryNode[]
 }
 
 export interface CategoryDetail {
