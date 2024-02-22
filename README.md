@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Setup môi trường:
 
-## Getting Started
+## Hệ điều hành:
+Khuyến nghị Ubuntu, đã test ở Ubuntu 20.04, Ubuntu 22.04
 
-First, run the development server:
+## Các service cần thiết:
+- Docker: https://docs.docker.com/engine/install/ubuntu/
+- Node: 
+    - Khuyến nghị dùng Node.js version càng mới càng tốt, đã test với Node.js v21.5.0
+    - Khuyến nghị cài bằng NodeSource PPA (Cài bằng apt trên Ubuntu thấy Node.js không lên được bản mới nhất)
+    - Tutorial: https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04#option-2-installing-node-js-with-apt-using-a-nodesource-ppa
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Setup backend
+1. Clone project
+```
+git clone https://github.com/namln2k/camping-web-magento-backend.git backend && cd backend
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Copy các folder tải từ drive vào project
+```
+cp -r path/to/folder/docker/ ./
+cp path/to/file/db.sql ./
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Khởi chạy các service
+```
+cd docker/environment && docker compose up -d
+```
+**Note**: Sửa biến WORK_DIR và VIRTUAL_HOST trong docker/environment/.env trước khi chạy (nếu cần)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+4. Vào cli bash:
+```
+docker compose exec cli bash
+```
 
-## Learn More
+5. Vào mysql với account root để tạo db và cấp quyền cho user magento
+```
+mysql -u root -h db -p
+```
+> mysql bash
+```
+CREATE DATABASE magento246p3;
+GRANT ALL PRIVILEGES ON magento246p3.* TO 'magento'@'%' WITH GRANT OPTION;
+```
 
-To learn more about Next.js, take a look at the following resources:
+6. Import database bằng user magento
+```
+mysql -u magento -h db -p magento246p3 < db.sql
+```
+**Note: Sửa base_url và base_secure_url trong core_config_data nếu cần
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+7. Cài các module cho project bằng composer và chạy deploy code ở chế độ developer
+```
+composer install && bin/magento setup:upgrade
+```
 
-## Deploy on Vercel
+8. Thử truy cập vào frontend và backend magento. Default là
+- Frontend: http://magento246p3.local/
+- Backend: http://magento246p3.local/admin
+    - Username: ```admin```
+    - Password: ```admin123```
+- Kết quả thấy được như này là ok
+    - Frontend: https://i.imgur.com/h1xBF2a.png
+    - Backend: https://i.imgur.com/5lkpeq5.png
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Setup frontend:
+1. Clone project
+```
+git clone https://github.com/namln2k/camping-web.git frontend && cd frontend
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+2. Copy các folder tải từ drive vào project
+```
+cp path/to/file/.env ./
+```
+
+3. Cài các package cho project bằng npm và chạy web lên ở chế độ dev
+```
+npm i && npm run dev
+```
