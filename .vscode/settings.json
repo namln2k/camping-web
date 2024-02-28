@@ -4,5 +4,6 @@
     "prettier.jsxSingleQuote": true,
     "prettier.singleQuote": true,
     "html.completion.attributeDefaultValue": "singlequotes",
-    "editor.wordWrapColumn": 80
+    "editor.wordWrapColumn": 80,
+    "editor.tabSize": 2
 }

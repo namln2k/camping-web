@@ -6,6 +6,7 @@ const nextConfig = {
     MAGENTO_BASE_MEDIA_URL: `${process.env.MAGENTO_BASE_URL}/pub/media`,
     MAGENTO_BASE_MEDIA_CATALOG_PRODUCT_URL: `${process.env.MAGENTO_BASE_URL}/media/catalog/product`,
     BASE_URL: process.env.BASE_URL,
+    NEXTAUTH_JWT_SECRET: process.env.NEXTAUTH_JWT_SECRET,
   },
   reactStrictMode: true,
   images: {
