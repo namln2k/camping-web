@@ -9,5 +9,5 @@ export interface GlobalMessage extends Message {
   duration: number
 }
 
-export const DEFAULT_DURATION = 4000
+export const DEFAULT_DURATION = 5000
 export const DURATION_CHECK_INTERVAL = 100
