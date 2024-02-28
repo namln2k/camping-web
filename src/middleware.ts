@@ -1,16 +1,8 @@
-import NextAuth from 'next-auth'
 import authConfig from '@/auth.config'
+import { API_AUTH_PREFIX, AUTH_ROUTES, DEFAULT_REDIRECT_ROUTE } from '@/types'
+import NextAuth from 'next-auth'
 
 const { auth } = NextAuth(authConfig)
-
-export const API_AUTH_PREFIX = '/api/auth'
-export const AUTH_ROUTES = [
-  '/auth/login',
-  '/auth/register',
-  '/auth/error',
-  '/auth/reset',
-]
-export const PROTECTED_ROUTES = ['/settings']
 
 export default auth((req) => {
   // TODO: Refactor routing logic
@@ -25,12 +17,8 @@ export default auth((req) => {
 
   if (AUTH_ROUTES.includes(pathName)) {
     if (isLoggedIn) {
-      return Response.redirect(new URL('/settings', nextUrl))
+      return Response.redirect(new URL(DEFAULT_REDIRECT_ROUTE, nextUrl))
     }
-  }
-
-  if (PROTECTED_ROUTES.includes(pathName) && !isLoggedIn) {
-    return Response.redirect(new URL('/auth/login', nextUrl))
   }
 })
 

@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import LogoutButton from '@/components/header/LogoutButton'
 import MiniCart from '@/components/header/MiniCart'
+import LoginButton from './LoginButton'
 
 interface Props {
   className?: string
@@ -16,9 +17,9 @@ export default async function Header({ className }: Props) {
   const currentUser = await useCurrentUser()
 
   let actionsComponent = (
-    <div>
-      <Link href='/auth/login'>Login</Link>
-    </div>
+    <>
+      <LoginButton />
+    </>
   )
 
   if (currentUser) {
