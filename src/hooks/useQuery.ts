@@ -3,11 +3,11 @@ import { Session } from '@/types'
 import { QueryOptions } from '@apollo/client'
 import { useCurrentUser } from './auth/useCurrentUser'
 
-export default async function useQuery(
+export default async function useQuery<T>(
   query: QueryOptions['query'],
   variables?: any
-): Promise<[any, any]> {
-  let data: any = {},
+): Promise<[T | undefined, any]> {
+  let data: T | undefined = undefined,
     errors: any = {}
 
   const session: Session | null = await useCurrentUser()

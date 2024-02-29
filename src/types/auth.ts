@@ -8,6 +8,7 @@ export interface LoginParams {
 
 export interface User extends NextAuthUser {
   magentoToken?: string
+  cartId?: string
 }
 
 export interface Session extends NextAuthSession {
