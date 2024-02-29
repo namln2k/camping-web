@@ -5,7 +5,7 @@ import { useMiniCart } from '@/hooks/cart/useMiniCart'
  * TODO: Develop full logic and implement UI/UX
  */
 export default async function MiniCart() {
-  useMiniCart()
+  const [cart, errors] = await useMiniCart()
 
   return <div>Mini Cart</div>
 }

@@ -3,42 +3,17 @@ import ProductPartialPrice from '@/components/catalog/product/ProductPartialPric
 import ProductRating from '@/components/catalog/product/ProductRating'
 import Swatch from '@/components/catalog/product/detail/Swatch'
 import { PRODUCT_IMAGE_PLACEHOLDER } from '@/constants'
-import { GalleryEntry, ProductDetail, ProductVariant } from '@/types'
+import { GalleryEntry, ProductDetail } from '@/types'
+import {
+  SelectedOption,
+  findVariantBySelectedOptions,
+} from '@/util/catalog/product'
+import { HeartIcon } from '@heroicons/react/24/solid'
 import { useCallback, useEffect, useState } from 'react'
 
 interface Props {
   product: ProductDetail
   className?: string
-}
-
-interface SelectedOption {
-  attributeCode: string
-  valueUid: string
-}
-
-const findVariantBySelectedOptions = (
-  variants: ProductVariant[],
-  selectedOptions: SelectedOption[]
-): ProductVariant | null => {
-  let result = null
-
-  variants.forEach((variant) => {
-    const { attributes } = variant
-
-    const matched = attributes.every((attribute) => {
-      const { code, uid } = attribute
-      const selectedOption = selectedOptions.find((option) => {
-        return option.attributeCode === code && option.valueUid === uid
-      })
-      return selectedOption
-    })
-
-    if (matched) {
-      result = variant
-    }
-  })
-
-  return result
 }
 
 export default function ConfigurableProduct({
@@ -207,6 +182,9 @@ export default function ConfigurableProduct({
             <h2 className='max-w-xl mt-6 mb-6 text-2xl font-semibold leading-loose tracking-wide text-gray-700 md:text-3xl'>
               {productName}
             </h2>
+            <h2 className='max-w-xl mt-6 mb-6 text-md text-gray-700 md:text-lg'>
+              SKU: {selectedProductSku || product.sku}
+            </h2>
             <ProductPartialPrice price={price_range.maximum_price} />
             <ProductRating
               ratingSummary={rating_summary}
@@ -228,23 +206,11 @@ export default function ConfigurableProduct({
               </div>
             </div>
             <div className='mb-4 lg:mb-0'>
-              <button className='flex items-center justify-center w-full h-10 p-2 mr-4 text-gray-700 border border-gray-300 lg:w-11 hover:text-gray-50 hover:bg-blue-600 hover:border-blue-600'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='16'
-                  height='16'
-                  fill='currentColor'
-                  className=' bi bi-heart'
-                  viewBox='0 0 16 16'
-                >
-                  <path d='m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z'></path>
-                </svg>
+              <button className='flex items-center justify-center p-4 mr-4 border hover:bg-blue-200 rounded-xl transition-all'>
+                <HeartIcon className='w-6 h-6 text-red-500' />
               </button>
             </div>
-            <button
-              className='w-full px-4 py-3 text-center text-blue-600 bg-blue-100 border border-blue-600 hover:bg-blue-600 hover:text-gray-100 lg:w-1/2 rounded-xl'
-              disabled
-            >
+            <button className='w-full p-4 text-center text-blue-800 bg-blue-200 border hover:bg-blue-400 hover:text-white lg:w-1/2 rounded-xl'>
               Add to cart
             </button>
           </div>
