@@ -1,5 +1,5 @@
 import useQuery from '@/hooks/useQuery'
-import { addSimpleProductsToCartQuery } from './addSimpleProductsToCart.gql'
+import { addSimpleProductsToCartQuery } from './addToCart.gql'
 
 export default function useAddToCart(
   cartId: string,

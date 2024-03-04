@@ -1,4 +1,4 @@
-import { ProductPrice } from '.'
+import { ProductPrice } from './product'
 
 export interface BreadCrumbNode {
   category_id: number

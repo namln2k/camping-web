@@ -11,7 +11,9 @@ interface MiniCartQueryResult {
  * TODO: Develop full logic and implement this hook in the MiniCart component
  */
 export async function useMiniCart() {
-  const [cart, errors] = await useQuery<MiniCartQueryResult>(miniCartQuery)
+  const { data: cart, errors } = await useQuery<MiniCartQueryResult>(
+    miniCartQuery
+  )
 
   return [cart?.customerCart, errors]
 }

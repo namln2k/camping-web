@@ -183,7 +183,10 @@ export default function ConfigurableProduct({
               {productName}
             </h2>
             <h2 className='max-w-xl mt-6 mb-6 text-md text-gray-700 md:text-lg'>
-              SKU: {selectedProductSku || product.sku}
+              SKU:&nbsp;
+              <span className='font-bold'>
+                {selectedProductSku || product.sku}
+              </span>
             </h2>
             <ProductPartialPrice price={price_range.maximum_price} />
             <ProductRating
