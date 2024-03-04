@@ -8,34 +8,37 @@ export default {
     CredentialsProvider({
       async authorize({ email, password }) {
         // @ts-ignore
-        const result = await generateCustomerToken(email, password)
+        const tokenQueryResult = await generateCustomerToken(email, password)
 
-        if (result?.token) {
-          const cartQueryResult = await fetch(
-            process.env.MAGENTO_GRAPHQL_ENDPOINT || '',
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${result.token}`,
-              },
-              body: JSON.stringify({
-                query: `
-                  query {
-                    customerCart {
-                      id
+        const result = { magentoToken: tokenQueryResult?.token } as User
+
+        if (tokenQueryResult?.token) {
+          if (process.env.MAGENTO_GRAPHQL_ENDPOINT) {
+            const cartQueryResult = await fetch(
+              process.env.MAGENTO_GRAPHQL_ENDPOINT,
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${tokenQueryResult?.token}`,
+                },
+                body: JSON.stringify({
+                  query: `
+                    query {
+                      customerCart {
+                        id
+                      }
                     }
-                  }
-                `,
-              }),
-            }
-          )
-          const responseData = await cartQueryResult.json()
+                  `,
+                }),
+              }
+            )
+            const cartQueryData = await cartQueryResult.json()
 
-          return {
-            magentoToken: result.token,
-            cartId: responseData?.data?.customerCart?.id,
-          } as User
+            result.cartId = cartQueryData?.data?.customerCart?.id
+          }
+
+          return result
         }
 
         return null

@@ -4,8 +4,8 @@ import Pagination from '@/components/Pagination'
 import ProductFilters from '@/components/catalog/category/ProductFilters'
 import ProductCard from '@/components/catalog/product/ProductCard'
 import { PRODUCT_LISTING_PAGE_SIZE } from '@/constants'
-import useCategoryAttributes from '@/hooks/catalog/useCategoryAttributes'
-import useCategoryProducts from '@/hooks/catalog/useCategoryProducts'
+import useCategoryAttributes from '@/hooks/catalog/category/attributes/useCategoryAttributes'
+import useCategoryProducts from '@/hooks/catalog/category/products/useCategoryProducts'
 import { upsertQueryParam, upsertQueryParams } from '@/util'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
@@ -19,14 +19,12 @@ export default function CategoryProductList({ categoryUid }: Props) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const [attributeFilters, errors] = useCategoryAttributes(categoryUid)
+  const { filters: attributeFilters, errors } =
+    useCategoryAttributes(categoryUid)
   const applicableFilters = attributeFilters.filter((attributeFilter) => {
     return attributeFilter.attribute_code !== 'category_uid'
   })
-  const [productsData, error, refetchProducts] = useCategoryProducts(
-    categoryUid,
-    currentPage
-  )
+  const { products } = useCategoryProducts(categoryUid, currentPage)
 
   useEffect(() => {
     const pageNumber = searchParams.get('page')
@@ -60,38 +58,38 @@ export default function CategoryProductList({ categoryUid }: Props) {
     [pathname, router, searchParams]
   )
 
-  return productsData?.items?.length > 0 ? (
-    <div className="mt-6 md:flex">
-      <div className="w-full md:w-[16%]">
-        <p className="my-2 text-lg">Shopping options</p>
-        <div className="mt-4 pr-4">
+  return products.items?.length > 0 ? (
+    <div className='mt-6 md:flex'>
+      <div className='w-full md:w-[16%]'>
+        <p className='my-2 text-lg'>Shopping options</p>
+        <div className='mt-4 pr-4'>
           <ProductFilters
             onFilterChange={handleFilterChange}
             attributeFilters={applicableFilters}
           />
         </div>
       </div>
-      <div className="w-full md:w-[84%] pl-0 md:pl-8 ">
+      <div className='w-full md:w-[84%] pl-0 md:pl-8 '>
         <Pagination
           currentPage={currentPage}
           pageSize={PRODUCT_LISTING_PAGE_SIZE}
-          totalCount={productsData.total_count}
+          totalCount={products.total_count}
           onPageChange={(page) => {
             router.push(
               pathname + '?' + upsertQueryParam(searchParams, 'page', page)
             )
           }}
         />
-        <ul className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-12 gap-x-6 mt-10 mb-5">
-          {productsData?.items.map((product) => (
-            <li key={product.sku} className="h-full">
-              <ProductCard product={product} className="h-full" />
+        <ul className='grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-12 gap-x-6 mt-10 mb-5'>
+          {products?.items.map((product) => (
+            <li key={product.sku} className='h-full'>
+              <ProductCard product={product} className='h-full' />
             </li>
           ))}
         </ul>
       </div>
     </div>
   ) : (
-    <div className="mt-10">No products found!</div>
+    <div className='mt-10'>No products found!</div>
   )
 }

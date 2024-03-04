@@ -1,5 +1,5 @@
 import ErrorFallback from '@/components/ErrorFallback'
-import useMegaMenu from '@/hooks/useMegaMenu'
+import useMegaMenu from '@/hooks/mega-menu/useMegaMenu'
 import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 
@@ -8,9 +8,9 @@ interface Props {
 }
 
 export default async function CategoryNav({ className = '' }: Props) {
-  const [categories, errors] = await useMegaMenu()
+  const { categories, errors } = await useMegaMenu()
 
-  if (errors.length) {
+  if (errors.length || !categories) {
     return (
       <ErrorFallback
         className={className}

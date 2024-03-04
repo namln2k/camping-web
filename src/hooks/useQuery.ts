@@ -6,9 +6,9 @@ import { useCurrentUser } from './auth/useCurrentUser'
 export default async function useQuery<T>(
   query: QueryOptions['query'],
   variables?: any
-): Promise<[T | undefined, any]> {
-  let data: T | undefined = undefined,
-    errors: any = {}
+): Promise<{ data?: T; errors: Error[] }> {
+  let data,
+    errors = []
 
   const session: Session | null = await useCurrentUser()
 
@@ -43,5 +43,5 @@ export default async function useQuery<T>(
     }
   }
 
-  return [data, errors]
+  return { data, errors }
 }

@@ -5,7 +5,6 @@ import NextAuth from 'next-auth'
 const { auth } = NextAuth(authConfig)
 
 export default auth((req) => {
-  // TODO: Refactor routing logic
   const { nextUrl } = req
   const { pathname: pathName } = nextUrl
 
