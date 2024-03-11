@@ -3,6 +3,7 @@ import ProductPartialPrice from '@/components/catalog/product/ProductPartialPric
 import ProductRating from '@/components/catalog/product/ProductRating'
 import Swatch from '@/components/catalog/product/detail/Swatch'
 import { PRODUCT_IMAGE_PLACEHOLDER } from '@/constants'
+import useAddToCart from '@/hooks/cart/add/useAddToCart'
 import { GalleryEntry, ProductDetail } from '@/types'
 import {
   SelectedOption,
@@ -39,6 +40,7 @@ export default function ConfigurableProduct({
   const [childProductGallery, setChildProductGallery] = useState<
     GalleryEntry[]
   >([])
+  const addToCartAction = useAddToCart()
 
   const findSelectedOptionIndex = (
     option: SelectedOption,
@@ -213,7 +215,12 @@ export default function ConfigurableProduct({
                 <HeartIcon className='w-6 h-6 text-red-500' />
               </button>
             </div>
-            <button className='w-full p-4 text-center text-blue-800 bg-blue-200 border hover:bg-blue-400 hover:text-white lg:w-1/2 rounded-xl'>
+            <button
+              className='w-full p-4 text-center text-blue-800 bg-blue-200 border hover:bg-blue-400 hover:text-white lg:w-1/2 rounded-xl'
+              onClick={() => {
+                addToCartAction()
+              }}
+            >
               Add to cart
             </button>
           </div>
