@@ -1,7 +1,8 @@
-import { generateCustomerToken } from '@/actions/generateCustomerToken'
+import { generateCustomerToken } from '@/actions/auth/generateCustomerToken'
 import { User } from '@/types'
 import type { NextAuthConfig } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import { getCartForCustomer } from './actions/getCartForCustomer'
 
 export default {
   providers: [
@@ -13,30 +14,9 @@ export default {
         const result = { magentoToken: tokenQueryResult?.token } as User
 
         if (tokenQueryResult?.token) {
-          if (process.env.MAGENTO_GRAPHQL_ENDPOINT) {
-            const cartQueryResult = await fetch(
-              process.env.MAGENTO_GRAPHQL_ENDPOINT,
-              {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  Authorization: `Bearer ${tokenQueryResult?.token}`,
-                },
-                body: JSON.stringify({
-                  query: `
-                    query {
-                      customerCart {
-                        id
-                      }
-                    }
-                  `,
-                }),
-              }
-            )
-            const cartQueryData = await cartQueryResult.json()
+          const cartId = await getCartForCustomer(tokenQueryResult.token)
 
-            result.cartId = cartQueryData?.data?.customerCart?.id
-          }
+          result.cartId = cartId
 
           return result
         }
