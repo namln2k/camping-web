@@ -1,6 +1,6 @@
 'use client'
 
-import { logout } from '@/actions/logout'
+import { logout } from '@/actions/auth/logout'
 
 /**
  * This is a draft for the logout button

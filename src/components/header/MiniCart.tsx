@@ -7,5 +7,5 @@ import { useMiniCart } from '@/hooks/cart/useMiniCart'
 export default async function MiniCart() {
   const [cart, errors] = await useMiniCart()
 
-  return <div>Mini Cart</div>
+  return <div>{JSON.stringify(cart, null, 4)}</div>
 }

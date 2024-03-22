@@ -1,12 +1,26 @@
+import { useAppSelector } from '@/lib/redux/hooks'
 import { useMutation } from '@apollo/client'
 import { useCallback } from 'react'
 import { addSimpleProductsToCartQuery } from './addToCart.gql'
 
 export default function useAddToCart() {
-  const [addToCartMutation] = useMutation(addSimpleProductsToCartQuery)
+  const cartId: string = useAppSelector((state) => state.cartId)
+  const token: string = useAppSelector((state) => state.token)
+
+  const [addToCartMutation] = useMutation(addSimpleProductsToCartQuery, {
+    context: {
+      headers: {
+        Authorizations: `Bearer ${token}`,
+      },
+    },
+  })
 
   const addToCart = useCallback(
-    (cartId: string, quantity: number, sku: string) => {
+    (quantity: number, sku?: string) => {
+      if (!sku) {
+        return false
+      }
+
       addToCartMutation({
         variables: {
           cartId,
@@ -15,7 +29,7 @@ export default function useAddToCart() {
         },
       })
     },
-    [addToCartMutation]
+    [cartId, addToCartMutation]
   )
 
   return addToCart

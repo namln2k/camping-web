@@ -10,6 +10,7 @@ import {
   findVariantBySelectedOptions,
 } from '@/util/catalog/product'
 import { HeartIcon } from '@heroicons/react/24/solid'
+import { InputNumber } from 'antd'
 import { useCallback, useEffect, useState } from 'react'
 
 interface Props {
@@ -40,6 +41,7 @@ export default function ConfigurableProduct({
   const [childProductGallery, setChildProductGallery] = useState<
     GalleryEntry[]
   >([])
+  const [quantityToAddToCart, setQuantityToAddToCart] = useState<number>(1)
   const addToCartAction = useAddToCart()
 
   const findSelectedOptionIndex = (
@@ -202,11 +204,7 @@ export default function ConfigurableProduct({
             <div className='mb-4 mr-4 lg:mb-0'>
               <div className='w-28'>
                 <div className='relative flex flex-row w-full h-10 bg-transparent rounded-lg'>
-                  <input
-                    type='number'
-                    className='w-full text-center text-gray-700 placeholder-gray-700 bg-gray-100 outline-none focus:outline-none text-md hover:text-black'
-                    placeholder='1'
-                  />
+                  <InputNumber defaultValue={1} />
                 </div>
               </div>
             </div>
@@ -218,7 +216,7 @@ export default function ConfigurableProduct({
             <button
               className='w-full p-4 text-center text-blue-800 bg-blue-200 border hover:bg-blue-400 hover:text-white lg:w-1/2 rounded-xl'
               onClick={() => {
-                addToCartAction()
+                addToCartAction(quantityToAddToCart, selectedProductSku)
               }}
             >
               Add to cart

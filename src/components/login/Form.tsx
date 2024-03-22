@@ -1,6 +1,6 @@
 'use client'
 
-import { login } from '@/actions/login'
+import { login } from '@/actions/auth/login'
 import { add } from '@/lib/redux/features/messages/messagesSlice'
 import { useAppDispatch } from '@/lib/redux/hooks'
 import { LoginParams } from '@/types'

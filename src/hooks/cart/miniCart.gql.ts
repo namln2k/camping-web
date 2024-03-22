@@ -11,6 +11,34 @@ export const miniCartQuery = gql`
       id
       is_virtual
       total_quantity
+      items {
+        id
+        product {
+          name
+          sku
+          stock_status
+          url_key
+          url_suffix
+          image {
+            url
+          }
+          price_range {
+            minimum_price {
+              regular_price {
+                value
+                currency
+              }
+            }
+          }
+        }
+        quantity
+        prices {
+          row_total {
+            value
+            currency
+          }
+        }
+      }
     }
   }
 `
