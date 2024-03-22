@@ -19,6 +19,7 @@ export default async function useQuery<T>(
 
   // Add token to the request headers if the user is logged in
   const token = session?.user?.magentoToken || ''
+
   if (!!token) {
     queryConfig.context = {
       headers: {

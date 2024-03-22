@@ -8,7 +8,7 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     update(state: string, action: PayloadAction<string>) {
-      state = action.payload
+      state = localStorage.getItem('cartId') || ''
 
       window.addEventListener('cartUpdated', () => {
         state = localStorage.getItem('cartId') || ''

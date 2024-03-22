@@ -4,16 +4,14 @@ import { signIn } from '@/auth'
 import { DEFAULT_REDIRECT_ROUTE, LoginParams } from '@/types'
 import { AuthError } from 'next-auth'
 
-export const login = async ({
-  email,
-  password,
-  callbackUrl = null,
-}: LoginParams) => {
+export const login = async ({ email, password, callbackUrl }: LoginParams) => {
   try {
     await signIn('credentials', {
       email,
       password,
-      redirectTo: callbackUrl || DEFAULT_REDIRECT_ROUTE,
+      redirectTo: `/persistUserData?callbackUrl=${
+        callbackUrl || DEFAULT_REDIRECT_ROUTE
+      }`,
     })
   } catch (error) {
     if (error instanceof AuthError) {
